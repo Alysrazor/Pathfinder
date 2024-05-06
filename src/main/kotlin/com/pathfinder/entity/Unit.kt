@@ -28,8 +28,21 @@ data class Unit(
     @Column(name = "unit_magic_resistance")
     private var unitMagicResistance: Int,
 
-    // TODO(UnitClass, UnitStats, UnitSpells)
+    @Column(name = "unit_class")
+    private var unitClass: Int,
+
+    @ManyToOne
+    @JoinColumn(name = "unit_stats", nullable = false)
+    private var unitStats: UnitStats,
+
+    @ManyToMany
+    @JoinTable(
+        name = "unit_spells",
+        joinColumns = [JoinColumn(name = "unit_uuid")],
+        inverseJoinColumns = [JoinColumn(name = "spell_uuid")]
+    )
+    private var unitSpells: Set<Spell>,
 
     @Column(name = "comment")
-    private var comment: String
+    private var comment: String,
 )
