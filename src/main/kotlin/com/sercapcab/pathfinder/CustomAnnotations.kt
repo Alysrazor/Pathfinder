@@ -1,4 +1,4 @@
-package com.pathfinder
+package com.sercapcab.pathfinder
 
 import kotlin.annotation.AnnotationRetention
 import kotlin.annotation.AnnotationTarget

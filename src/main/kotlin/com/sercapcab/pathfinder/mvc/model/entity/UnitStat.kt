@@ -1,5 +1,6 @@
-package com.pathfinder.entity
+package com.sercapcab.pathfinder.mvc.model.entity
 
+import com.sercapcab.pathfinder.Since
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
@@ -11,32 +12,34 @@ import java.util.UUID
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-data class UnitStats(
+@Since(version = "1.0")
+data class UnitStat(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val uuid: UUID,
+    val uuid: UUID,
 
     @Column(name = "strength")
-    private var strength: Int,
+    var strength: Int,
 
     @Column(name = "dexterity")
-    private var dexterity: Int,
+    var dexterity: Int,
 
     @Column(name = "constitution")
-    private var constitution: Int,
+    var constitution: Int,
 
     @Column(name = "intelligence")
-    private var intelligence: Int,
+    var intelligence: Int,
 
     @Column(name = "wisdom")
-    private var wisdom: Int,
+    var wisdom: Int,
 
     @Column(name = "charisma")
-    private var charisma: Int,
+    var charisma: Int,
 
     @Column(name = "comment")
-    private var comment: String,
+    var comment: String,
 
-    @OneToMany(mappedBy = "stats")
-    private var units: Set<Unit>
+    @OneToMany(mappedBy = "unitStat",
+        fetch = FetchType.LAZY)
+    var units: Set<Unit> = setOf()
 )
