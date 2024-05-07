@@ -11,13 +11,13 @@ class CharacterServiceImpl @Autowired constructor(private val characterDAO: Char
         return characterDAO.findAll().toList()
     }
 
-    override fun findByUUID(characterUUID: UUID): Character? {
+    override fun findByUUID(characterUUID: UUID): Character {
         return characterDAO.findById(characterUUID)
             .orElseThrow { EntityNotFoundException(Character::class.java, characterUUID) }
     }
 
-    override fun save(character: Character): Character {
-        return characterDAO.save(character)
+    override fun save(character: Character){
+        characterDAO.save(character)
     }
 
     override fun delete(character: Character) {
