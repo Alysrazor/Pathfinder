@@ -14,8 +14,8 @@ class CharacterServiceImpl @Autowired constructor(private val characterDAO: Char
             .orElseThrow { EntityNotFoundException(Character::class.java, characterUUID) }
     }
 
-    override fun save(character: Character) {
-        characterDAO.save(character)
+    override fun save(character: Character): Character {
+        return characterDAO.save(character)
     }
 
     override fun delete(character: Character) {

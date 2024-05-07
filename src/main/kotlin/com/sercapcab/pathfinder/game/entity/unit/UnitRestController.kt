@@ -1,6 +1,12 @@
 package com.sercapcab.pathfinder.game.entity.unit
 
+import com.sercapcab.pathfinder.game.entity.character.CharacterService
+import com.sercapcab.pathfinder.game.entity.creature.CreatureService
+import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStat
+import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStatService
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
+import com.sercapcab.pathfinder.game.exceptions.unit.UnitHasDataException
+import com.sercapcab.pathfinder.game.exceptions.unit.UnitStatHasDataException
 import com.sercapcab.pathfinder.game.spell.SpellService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,6 +19,8 @@ import java.util.UUID
 @RequestMapping("/api/v1/unit")
 class UnitRestController constructor(@Autowired private val unitService: UnitService,
                                      @Autowired private val unitStatService: UnitStatService,
+                                     @Autowired private val characterService: CharacterService,
+                                     @Autowired private val creatureService: CreatureService,
                                      @Autowired private val spellService: SpellService
 ){
 
@@ -106,6 +114,26 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     @DeleteMapping(path = ["{id}", "{id}/"])
     @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUnit(@PathVariable id: UUID) {
-        TODO("Implementar Spell para poder borrar la unidad")
+        val foundUnit = unitService.findByUUID(id) ?: throw EntityNotFoundException(Unit::class.java, id)
+        val isUnitBeingUsed = characterService.findAll().any { char -> char.unit.uuid == id}
+                && creatureService.findAll().any { creature -> creature.unit.uuid == id}
+
+
+        if (isUnitBeingUsed)
+            throw UnitHasDataException(id)
+        else
+            unitService.delete(foundUnit)
+    }
+
+    @DeleteMapping(path = ["stat/{id}", "stat/{id}"])
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    fun deleteUnitStat(@PathVariable id: UUID) {
+        val foundUnitStats = unitStatService.findByUUID(id) ?: throw EntityNotFoundException(UnitStat::class.java, id)
+        val cantDelete = unitService.findAll().any { it.unitStat.uuid == id }
+
+        if (cantDelete)
+            throw UnitStatHasDataException(id)
+        else
+            unitStatService.delete(foundUnitStats)
     }
 }

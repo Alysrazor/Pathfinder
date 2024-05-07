@@ -1,6 +1,7 @@
-package com.sercapcab.pathfinder.game.entity.unit
+package com.sercapcab.pathfinder.game.entity.unit.unitstat
 
 import com.sercapcab.pathfinder.Since
+import com.sercapcab.pathfinder.game.entity.unit.Unit
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data

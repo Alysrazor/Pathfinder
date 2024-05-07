@@ -17,14 +17,14 @@ import java.util.UUID
 data class Creature(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val creatureUuid: UUID,
+    val creatureUuid: UUID,
 
     @ManyToOne
     @JoinColumn(name = "unit_uuid",
         foreignKey = ForeignKey(name = "fk_unit_template"),
         nullable = false,
         updatable = false)
-    private val unit: Unit,
+    val unit: Unit,
 
-    private var isBoss: Boolean
+    var isBoss: Boolean
 )

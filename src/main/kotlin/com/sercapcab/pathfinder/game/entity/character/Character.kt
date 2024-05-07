@@ -18,19 +18,19 @@ import java.util.UUID
 data class Character(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val characterUuid: UUID,
+    val characterUuid: UUID,
 
     @ManyToOne
     @JoinColumn(name = "unit_uuid",
         foreignKey = ForeignKey(name = "fk_unit_template"),
         nullable = false,
         updatable = false)
-    private val unit: Unit,
+    val unit: Unit,
 
     @ManyToOne
     @JoinColumn(name = "player_uuid",
         foreignKey = ForeignKey(name = "fk_player"),
         nullable = false,
         updatable = false)
-    private val player: Player
+    val player: Player
 )

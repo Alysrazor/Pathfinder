@@ -17,24 +17,24 @@ import java.util.UUID
 data class Spell(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val spellUuid: UUID,
+    val spellUuid: UUID,
 
     @Column(name = "spell_name")
-    private var spellName: String,
+    var spellName: String,
 
     @Column(name = "spell_school")
-    private var spellSchool: Int,
+    var spellSchool: Int,
 
     @Column(name = "base_damage")
-    private var baseDamage: Int,
+    var baseDamage: Int,
 
     @Column(name = "stat_modifier")
-    private var statModifier: Int,
+    var statModifier: Int,
 
     @Column(name = "stat_multiplier")
-    private var statMultiplier: Double,
+    var statMultiplier: Double,
 
     @ManyToMany(mappedBy = "unitSpells",
         fetch = FetchType.LAZY)
-    private var units: Set<Unit> = setOf()
+    var units: Set<Unit> = setOf()
 )
