@@ -11,13 +11,13 @@ class SpellServiceImpl @Autowired constructor(private val spellDAO: SpellDAO): S
         return spellDAO.findAll().toList()
     }
 
-    override fun findByUUID(spellUUID: UUID): Spell? {
+    override fun findByUUID(spellUUID: UUID): Spell {
         return spellDAO.findById(spellUUID)
             .orElseThrow { EntityNotFoundException(Spell::class.java, spellUUID) }
     }
 
-    override fun save(spell: Spell) {
-        spellDAO.save(spell)
+    override fun save(spell: Spell): Spell {
+        return spellDAO.save(spell)
     }
 
     override fun delete(spell: Spell) {

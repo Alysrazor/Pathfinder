@@ -2,8 +2,10 @@ package com.sercapcab.pathfinder.game.entity.player
 
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.stereotype.Service
 import java.util.*
 
+@Service
 class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO): PlayerService {
     override fun findAll(): List<Player> {
         return playerDAO.findAll().toList()

@@ -2,6 +2,7 @@ package com.sercapcab.pathfinder.game.entity.player
 
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.character.Character
+import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
@@ -16,22 +17,22 @@ import java.util.UUID
 @Since(version = "1.0")
 data class Player(
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private val uuid: UUID,
+    @Column(name = "uuid", updatable = false)
+    val uuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Player".toByteArray()), UUID.randomUUID().toString()),
 
     @Column(name = "player_name", length = 20, nullable = false, unique = true)
-    private var playerName: String,
+    var playerName: String,
 
     @Column(name = "password", length = 64, nullable = false)
-    private var password: String,
+    var password: String,
 
     @Column(name = "salt", length = 64, nullable = false)
-    private var salt: String,
+    var salt: String,
 
     @Column(name = "android_version")
-    private var androidVersion: Int,
+    var androidVersion: Int,
 
     @OneToMany(mappedBy = "player",
         fetch = FetchType.LAZY)
-    private var characters: Set<Character>
+    var characters: Set<Character>
 )

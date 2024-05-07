@@ -12,13 +12,13 @@ class UnitStatServiceImpl @Autowired constructor(private val unitStatDAO: UnitSt
        return unitStatDAO.findAll().toList()
     }
 
-    override fun findByUUID(unitUUID: UUID): UnitStat? {
+    override fun findByUUID(unitUUID: UUID): UnitStat {
         return unitStatDAO.findById(unitUUID)
             .orElseThrow { EntityNotFoundException(UnitStat::class.java, unitUUID) }
     }
 
-    override fun save(unitStat: UnitStat) {
-        unitStatDAO.save(unitStat)
+    override fun save(unitStat: UnitStat): UnitStat {
+        return unitStatDAO.save(unitStat)
     }
 
     override fun delete(unitStat: UnitStat) {

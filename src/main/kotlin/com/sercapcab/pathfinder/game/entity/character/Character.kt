@@ -3,6 +3,7 @@ package com.sercapcab.pathfinder.game.entity.character
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.unit.Unit
 import com.sercapcab.pathfinder.game.entity.player.Player
+import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
@@ -17,8 +18,8 @@ import java.util.UUID
 @Since(version = "1.0")
 data class Character(
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    val characterUuid: UUID,
+    @Column(name = "character_uuid", updatable = false)
+    val characterUuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Character".toByteArray()), UUID.randomUUID().toString()),
 
     @ManyToOne
     @JoinColumn(name = "unit_uuid",
