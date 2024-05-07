@@ -1,5 +1,6 @@
 package com.sercapcab.pathfinder.game.entity.unit
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.enumeration.UnitClass
@@ -44,6 +45,7 @@ data class Unit(
         nullable = false)
     var unitStat: UnitStat,
 
+
     @ManyToMany
     @JoinTable(
         name = "unit_spells",
@@ -52,7 +54,8 @@ data class Unit(
         inverseJoinColumns = [JoinColumn(name = "spell_uuid")],
         inverseForeignKey = ForeignKey(name = "fk_spell")
     )
-    var unitSpells: MutableSet<Spell> = mutableSetOf(),
+    @JsonIgnore
+    var unitSpells: MutableSet<Spell>? = mutableSetOf(),
 
     @Column(name = "unit_model")
     var unitModel: Int,

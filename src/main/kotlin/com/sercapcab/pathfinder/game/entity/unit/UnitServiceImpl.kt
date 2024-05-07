@@ -16,8 +16,8 @@ class UnitServiceImpl @Autowired constructor(private val unitDAO: UnitDAO): Unit
             .orElseThrow { EntityNotFoundException(Unit::class.java, unitUUID) }
     }
 
-    override fun save(unit: Unit): Unit {
-        return unitDAO.save(unit)
+    override fun save(unit: Unit) {
+        unitDAO.save(unit)
     }
 
     override fun delete(unit: Unit) {

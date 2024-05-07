@@ -5,12 +5,12 @@ import com.sercapcab.pathfinder.game.entity.character.CharacterService
 import com.sercapcab.pathfinder.game.entity.creature.CreatureService
 import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStatService
-import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import com.sercapcab.pathfinder.game.exceptions.unit.UnitHasDataException
 import com.sercapcab.pathfinder.game.exceptions.unit.UnitStatHasDataException
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import com.sercapcab.pathfinder.game.spell.Spell
 import com.sercapcab.pathfinder.game.spell.SpellService
+import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
 import org.springframework.beans.factory.annotation.Autowired
@@ -59,9 +59,9 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     @GetMapping(path = ["{id}/spells"], produces = [json])
     @NotNull
     fun getAllSpellsFromUnit(@PathVariable id: UUID): ResponseEntity<MutableSet<Spell>> {
-        val unitSpells: MutableSet<Spell> = unitService.findByUUID(id).unitSpells
+        val unitSpells: MutableSet<Spell>? = unitService.findByUUID(id).unitSpells
         println(id)
-        unitSpells.forEach{println(it.spellUuid)}
+        unitSpells?.forEach{println(it.spellUuid)}
         return ResponseEntity.ok(unitSpells)
     }
 
@@ -83,9 +83,8 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
 
     @PostMapping(path = [""], produces = [json])
     @NotNull
-    fun create(@RequestBody unit: Unit): ResponseEntity<Unit> {
-        //unit.uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Unit".toByteArray()), UUID.randomUUID().toString())
-        val unitCreated = unitService.save(unit)
+    fun create(@Valid @RequestBody unit: UnitRequest): ResponseEntity<Unit> {
+        unitService.save(unit.toUnit())
 
         /*unitCreated.unitSpells.forEach { spell ->
             spell.units.add(unitCreated)
@@ -96,9 +95,9 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
         return ResponseEntity
             .created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("")
-                    .buildAndExpand(unitCreated).toUri()
+                    .buildAndExpand(unit).toUri()
             )
-            .body(unitCreated)
+            .body(unit.toUnit())
     }
 
     @PostMapping(path = ["/stat"], produces = [json])
@@ -127,13 +126,13 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
         foundUnit.unitSpells = unit.unitSpells
         foundUnit.comment = unit.comment
 
-        val saveUnit = unitService.save(foundUnit)
+        unitService.save(foundUnit)
 
         return ResponseEntity
             .created(
-                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(saveUnit).toUri()
+                ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(foundUnit).toUri()
             )
-            .body(saveUnit)
+            .body(foundUnit)
     }
 
     @PutMapping(path = ["/stat/{id}"], produces = [json])
