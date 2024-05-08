@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor
 import java.util.UUID
 
 @Entity
-@Table(name = "unit_stat_template")
+@Table(name = "unit_stat_template", catalog = "rpg_duels")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -46,4 +46,38 @@ data class UnitStat(
     @OneToMany(mappedBy = "unitStat",
         fetch = FetchType.LAZY)
     var units: Set<Unit> = setOf()
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as UnitStat
+
+        return uuid == other.uuid
+    }
+
+    override fun hashCode(): Int {
+        return uuid.hashCode()
+    }
+
+    override fun toString(): String {
+        return String.format(
+            "UnitStat: %s%n" +
+                    "Strength: %d%n" +
+                    "Dexterity: %d%n" +
+                    "Constitution: %d%n" +
+                    "Intelligence: %d%n" +
+                    "Wisdom: %d%n" +
+                    "Charisma: %d%n" +
+                    "Comment: %s%n",
+            uuid.toString(),
+            strength,
+            dexterity,
+            constitution,
+            intelligence,
+            wisdom,
+            charisma,
+            comment
+        )
+    }
+}

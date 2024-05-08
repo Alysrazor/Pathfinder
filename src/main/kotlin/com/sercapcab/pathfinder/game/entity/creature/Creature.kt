@@ -10,7 +10,7 @@ import lombok.NoArgsConstructor
 import java.util.UUID
 
 @Entity
-@Table(name = "creature_template")
+@Table(name = "creature_template", catalog = "rpg_duels")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
@@ -20,13 +20,37 @@ data class Creature(
     @Column(name = "creature_uuid")
     val creatureUuid: UUID,
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY    )
     @JoinColumn(name = "unit_uuid",
         foreignKey = ForeignKey(name = "fk_unit_template"),
         nullable = false,
         updatable = false)
     val unit: Unit,
 
-    @Column(name = "isBoss")
+    @Column(name = "is_boss")
     var isBoss: Boolean = false
-)
+) {
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (javaClass != other?.javaClass) return false
+
+        other as Creature
+
+        if (creatureUuid != other.creatureUuid) return false
+
+        return true
+    }
+
+    override fun hashCode(): Int {
+        return creatureUuid.hashCode()
+    }
+
+    override fun toString(): String {
+        return String.format(
+            "Creature: %s%n" +
+                    "Is Boss: %b%n",
+            creatureUuid.toString(),
+            isBoss
+        )
+    }
+}

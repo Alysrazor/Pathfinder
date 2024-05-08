@@ -10,17 +10,17 @@ import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
-import java.util.UUID
+import java.util.*
 
 @Entity
-@Table(name = "spell_template")
+@Table(name = "spell_template", catalog = "rpg_duels")
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
 @Since(version = "1.0")
 data class Spell(
     @Id
-    @Column(name = "spell_uuid", updatable = false)
+    @Column(name = "spell_uuid", nullable = false, updatable = false)
     val spellUuid: UUID,
 
     @Column(name = "spell_name")
@@ -43,7 +43,54 @@ data class Spell(
     @Column(name = "stat_multiplier")
     var statMultiplier: Double,
 
-    @ManyToMany(mappedBy = "unitSpells",
-        fetch = FetchType.LAZY)
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "unitSpells")
+    @JsonIgnore
     var units: MutableSet<Unit> = mutableSetOf()
-)
+
+    /*@ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "unit_spells", catalog = "rpg_duels",
+        joinColumns = [
+            JoinColumn(name = "spell_uuid", nullable = false)
+        ],
+        inverseJoinColumns = [
+            JoinColumn(name = "unit_uuid", nullable = false)
+        ]
+    )
+    @JsonIgnore
+    var units: MutableSet<Unit> = mutableSetOf()*/
+) {
+    override fun hashCode(): Int {
+        var result = spellUuid.hashCode()
+        result = 31 * result + spellName.hashCode()
+        return result
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) return true
+        if (other !is Spell) return false
+
+        if (spellUuid != other.spellUuid) return false
+        if (spellName != other.spellName) return false
+
+        return true
+    }
+
+    override fun toString(): String {
+        return String.format(Locale.getDefault(),
+            "Hechizo: %s%n" +
+                    "Nombre: %s%n" +
+                    "Descripción: %s%n" +
+                    "SpellSchool: %s%n" +
+                    "Daño Base: %d%n" +
+                    "Estadística del hechizo: %s%n" +
+                    "Multiplicador de Estadística: %.2f%n",
+            spellUuid.toString(),
+            spellName,
+            spellDescription,
+            spellSchool.name,
+            baseDamage,
+            statModifier.statName,
+            statMultiplier)
+    }
+}

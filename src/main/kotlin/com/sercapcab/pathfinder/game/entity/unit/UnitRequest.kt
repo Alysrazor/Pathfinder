@@ -13,7 +13,7 @@ data class UnitRequest(
     var unitMagicResistance: Int,
     var unitClass: UnitClass,
     var unitStat: UnitStat,
-    val unitSpells: MutableSet<Spell> = mutableSetOf(),
+    val unitSpells: MutableSet<Spell>,
     var unitModel: Int,
     var comment: String,
 ) {
