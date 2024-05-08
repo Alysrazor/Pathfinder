@@ -26,6 +26,9 @@ data class Spell(
     @Column(name = "spell_name")
     var spellName: String,
 
+    @Column(name = "spell_description")
+    var spellDescription: String,
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "spell_school")
     var spellSchool: SpellSchool,

@@ -7,6 +7,7 @@ import java.util.*
 
 data class SpellRequest(
     var spellName: String,
+    var spellDescription: String,
     var spellSchool: SpellSchool,
     var baseDamage: Int,
     var statModifier: Stat,
@@ -16,6 +17,7 @@ data class SpellRequest(
         return Spell(
             spellUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Spell".toByteArray()), UUID.randomUUID().toString()),
             spellName = spellName,
+            spellDescription = spellDescription,
             spellSchool = spellSchool,
             baseDamage = baseDamage,
             statModifier = statModifier,

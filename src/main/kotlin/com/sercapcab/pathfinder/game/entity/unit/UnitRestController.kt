@@ -85,20 +85,16 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     @PostMapping(path = [""], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody unit: UnitRequest): ResponseEntity<Unit> {
-        unitService.save(unit.toUnit())
+        val unitToSave = unit.toUnit()
 
-        /*unitCreated.unitSpells.forEach { spell ->
-            spell.units.add(unitCreated)
-            spellService.save(spell)
-            println(spell)
-        }*/
+        unitService.save(unitToSave)
 
         return ResponseEntity
             .created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("")
-                    .buildAndExpand(unit).toUri()
+                    .buildAndExpand(unitToSave).toUri()
             )
-            .body(unit.toUnit())
+            .body(unitToSave)
     }
 
     @PostMapping(path = ["/stat"], produces = [json])
@@ -123,7 +119,7 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
         foundUnit.unitArmor = unit.unitArmor
         foundUnit.unitMagicResistance = unit.unitMagicResistance
         foundUnit.unitStat = unit.unitStat
-        foundUnit.unitSpells = unit.unitSpells
+        foundUnit.unitSpells.addAll(unit.unitSpells)
         foundUnit.comment = unit.comment
 
         unitService.save(foundUnit)

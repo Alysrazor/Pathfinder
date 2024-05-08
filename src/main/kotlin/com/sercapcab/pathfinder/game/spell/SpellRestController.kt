@@ -27,7 +27,10 @@ class SpellRestController constructor(
     fun getAllSpells(): ResponseEntity<List<Spell>> {
         val spells: List<Spell> = spellService.findAll()
 
-        return ResponseEntity.ok(spells)
+        return if (spells.isEmpty())
+            ResponseEntity.noContent().build()
+        else
+            return ResponseEntity.ok(spells)
     }
 
     @GetMapping(path = ["{id}"])
@@ -54,6 +57,7 @@ class SpellRestController constructor(
         val foundSpell = spellService.findByUUID(id)
 
         foundSpell.spellName = spellToUpdate.spellName
+        foundSpell.spellDescription = spellToUpdate.spellDescription
         foundSpell.spellSchool = spellToUpdate.spellSchool
         foundSpell.baseDamage = spellToUpdate.baseDamage
         foundSpell.statModifier = spellToUpdate.statModifier

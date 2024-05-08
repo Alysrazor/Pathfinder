@@ -10,6 +10,7 @@ import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
+import java.io.Serializable
 import java.util.*
 
 @Entity
@@ -20,7 +21,7 @@ import java.util.*
 @Since(version = "1.0")
 data class Unit(
     @Id
-    @Column(name = "uuid", updatable = false)
+    @Column(name = "uuid", nullable = false, updatable = false)
     val uuid: UUID,
 
     @Column(name = "name")
@@ -46,16 +47,17 @@ data class Unit(
     var unitStat: UnitStat,
 
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
         name = "unit_spells",
-        joinColumns = [JoinColumn(name = "unit_uuid")],
-        foreignKey = ForeignKey(name = "fk_unit_spell"),
-        inverseJoinColumns = [JoinColumn(name = "spell_uuid")],
-        inverseForeignKey = ForeignKey(name = "fk_spell")
-    )
-    @JsonIgnore
-    var unitSpells: MutableSet<Spell>? = mutableSetOf(),
+        catalog = "rpg_duels",
+        joinColumns = [
+            JoinColumn(name = "unit_uuid", nullable = false, updatable = false)
+        ],
+        inverseJoinColumns = [
+            JoinColumn(name = "spell_uuid", nullable = false, updatable = false)
+        ])
+    var unitSpells: MutableSet<Spell> = mutableSetOf(),
 
     @Column(name = "unit_model")
     var unitModel: Int,

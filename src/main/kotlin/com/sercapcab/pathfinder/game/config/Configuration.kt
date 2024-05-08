@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 import java.util.*
 
-@Configuration
+/*@Configuration
 class Configurator {
     @Bean
     @NotNull
@@ -68,4 +68,4 @@ class Configurator {
             println(unit.uuid)
         }
     }
-}
+}*/
