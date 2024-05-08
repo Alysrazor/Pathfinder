@@ -4,6 +4,7 @@ import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.character.CharacterService
 import com.sercapcab.pathfinder.game.entity.creature.CreatureService
 import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStat
+import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStatRequest
 import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStatService
 import com.sercapcab.pathfinder.game.exceptions.unit.UnitHasDataException
 import com.sercapcab.pathfinder.game.exceptions.unit.UnitStatHasDataException
@@ -102,8 +103,8 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
 
     @PostMapping(path = ["/stat"], produces = [json])
     @NotNull
-    fun create(@RequestBody unitStat: UnitStat): ResponseEntity<UnitStat> {
-        val unitStatCreated = unitStatService.save(unitStat)
+    fun create(@RequestBody unitStat: UnitStatRequest): ResponseEntity<UnitStat> {
+        val unitStatCreated = unitStatService.save(unitStat.toUnitStat())
 
         return ResponseEntity
             .created(
@@ -114,8 +115,7 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     }
 
     @PutMapping(path = ["{id}"], produces = [json])
-    @ResponseStatus(HttpStatus.CREATED)
-    fun updateUnit(@RequestBody unit: Unit, @PathVariable id: UUID): ResponseEntity<Unit> {
+    fun updateUnit(@RequestBody unit: UnitRequest, @PathVariable id: UUID): ResponseEntity<Unit> {
         val foundUnit = unitService.findByUUID(id)
 
         foundUnit.name = unit.name
@@ -136,7 +136,7 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     }
 
     @PutMapping(path = ["/stat/{id}"], produces = [json])
-    fun updateUnitStats(@RequestBody unitStat: UnitStat, @PathVariable id: UUID): ResponseEntity<UnitStat> {
+    fun updateUnitStats(@RequestBody unitStat: UnitStatRequest, @PathVariable id: UUID): ResponseEntity<UnitStat> {
         val foundUnitStat = unitStatService.findByUUID(id)
 
         foundUnitStat.strength = unitStat.strength
@@ -163,7 +163,6 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
         val isUnitBeingUsed = characterService.findAll().any { char -> char.unit.uuid == id}
                 && creatureService.findAll().any { creature -> creature.unit.uuid == id}
 
-
         if (isUnitBeingUsed)
             throw UnitHasDataException(id)
         else
@@ -173,7 +172,6 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     }
 
     @DeleteMapping(path = ["stat/{id}"], produces = [json])
-    @ResponseStatus(HttpStatus.NO_CONTENT)
     fun deleteUnitStat(@PathVariable id: UUID): ResponseEntity.HeadersBuilder<*> {
         val foundUnitStats = unitStatService.findByUUID(id)
         val cantDelete = unitService.findAll().any { it.unitStat.uuid == id }

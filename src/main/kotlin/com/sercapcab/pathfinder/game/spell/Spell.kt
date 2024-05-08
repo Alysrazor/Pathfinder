@@ -21,7 +21,7 @@ import java.util.UUID
 data class Spell(
     @Id
     @Column(name = "spell_uuid", updatable = false)
-    var spellUuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Spell".toByteArray()), System.currentTimeMillis().toString()),
+    val spellUuid: UUID,
 
     @Column(name = "spell_name")
     var spellName: String,

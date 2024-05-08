@@ -21,7 +21,7 @@ import java.util.*
 data class Unit(
     @Id
     @Column(name = "uuid", updatable = false)
-    var uuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Unit".toByteArray()), UUID.randomUUID().toString()),
+    val uuid: UUID,
 
     @Column(name = "name")
     var name: String,

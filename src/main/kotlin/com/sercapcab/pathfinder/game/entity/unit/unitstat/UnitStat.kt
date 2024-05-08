@@ -19,7 +19,7 @@ import java.util.UUID
 data class UnitStat(
     @Id
     @Column(name = "uuid", updatable = false)
-    val uuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.UnitStat".toByteArray()), UUID.randomUUID().toString()),
+    val uuid: UUID,
 
     @Column(name = "strength")
     var strength: Int,

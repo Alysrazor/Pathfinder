@@ -18,7 +18,7 @@ import java.util.UUID
 data class Player(
     @Id
     @Column(name = "uuid", updatable = false)
-    val uuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Player".toByteArray()), UUID.randomUUID().toString()),
+    val uuid: UUID,
 
     @Column(name = "player_name", length = 20, nullable = false, unique = true)
     var playerName: String,
@@ -27,12 +27,12 @@ data class Player(
     var password: String,
 
     @Column(name = "salt", length = 64, nullable = false)
-    var salt: String,
+    var salt: String    ,
 
     @Column(name = "android_version")
-    var androidVersion: Int,
+    var androidVersion: Int = 9,
 
     @OneToMany(mappedBy = "player",
         fetch = FetchType.LAZY)
-    var characters: Set<Character>
+    var characters: Set<Character> = setOf()
 )

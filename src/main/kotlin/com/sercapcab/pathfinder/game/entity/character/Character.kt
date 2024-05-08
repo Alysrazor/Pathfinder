@@ -19,7 +19,7 @@ import java.util.UUID
 data class Character(
     @Id
     @Column(name = "character_uuid", updatable = false)
-    val characterUuid: UUID = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Character".toByteArray()), UUID.randomUUID().toString()),
+    val characterUuid: UUID,
 
     @ManyToOne
     @JoinColumn(name = "unit_uuid",

@@ -44,15 +44,15 @@ class CharacterRestController constructor(@Autowired private val characterServic
 
     @PostMapping(path = [""], produces = [json])
     @NotNull
-    fun create(@Valid @RequestBody character: Character): ResponseEntity<Character> {
-        characterService.save(character)
+    fun create(@Valid @RequestBody character: CharacterRequest): ResponseEntity<Character> {
+        characterService.save(character.toCharacter())
 
         return ResponseEntity
             .created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("")
                     .buildAndExpand(character).toUri()
             )
-            .body(character)
+            .body(character.toCharacter())
     }
 
     @DeleteMapping(path = ["{id}"], produces = [json])

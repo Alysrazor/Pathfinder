@@ -12,14 +12,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.*
 
 typealias type = MediaType
+
 private const val json = type.APPLICATION_JSON_VALUE
 
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/spell")
 class SpellRestController constructor(
-    @Autowired private val spellService: SpellService,
-    @Autowired private val unitService: UnitService) {
+    @Autowired private val spellService: SpellService, @Autowired private val unitService: UnitService
+) {
 
     @GetMapping(path = ["", "/"])
     @NotNull
@@ -31,7 +32,7 @@ class SpellRestController constructor(
 
     @GetMapping(path = ["{id}"])
     @NotNull
-    fun getSpellById(@RequestParam spellUUID: UUID): ResponseEntity<Spell> {
+    fun getSpellById(@PathVariable spellUUID: UUID): ResponseEntity<Spell> {
         val spell: Spell = spellService.findByUUID(spellUUID)
 
         return ResponseEntity.ok(spell)
@@ -39,20 +40,18 @@ class SpellRestController constructor(
 
     @PostMapping(path = [""], produces = [json])
     @NotNull
-    fun create(@RequestBody spell: Spell): ResponseEntity<Spell> {
-        val spellCreated: Spell = spellService.save(spell)
+    fun create(@RequestBody spell: SpellRequest): ResponseEntity<Spell> {
+        val spellCreated: Spell = spellService.save(spell.toSpell())
 
-        return ResponseEntity
-            .created(
+        return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("").buildAndExpand(spellCreated).toUri()
-            )
-            .body(spellCreated)
+            ).body(spellCreated)
     }
 
     @PutMapping(path = ["{id}"], produces = [json])
     @NotNull
-    fun update(@PathVariable id: UUID, @RequestBody spellToUpdate: Spell): ResponseEntity<Spell> {
-        val foundSpell = spellService.findByUUID(spellToUpdate.spellUuid)
+    fun update(@PathVariable id: UUID, @RequestBody spellToUpdate: SpellRequest): ResponseEntity<Spell> {
+        val foundSpell = spellService.findByUUID(id)
 
         foundSpell.spellName = spellToUpdate.spellName
         foundSpell.spellSchool = spellToUpdate.spellSchool
@@ -62,11 +61,9 @@ class SpellRestController constructor(
 
         val saveSpell = spellService.save(foundSpell)
 
-        return ResponseEntity
-            .created(
+        return ResponseEntity.created(
                 ServletUriComponentsBuilder.fromCurrentRequest().path("{id}").buildAndExpand(saveSpell).toUri()
-            )
-            .build()
+            ).build()
     }
 
     @DeleteMapping(path = ["{id}"], produces = [json])
