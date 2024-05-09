@@ -1,21 +1,32 @@
 package com.sercapcab.pathfinder.game.entity.creature
 
-import com.sercapcab.pathfinder.game.entity.unit.Unit
+import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
+import com.sercapcab.pathfinder.game.enumeration.UnitClass
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
+import com.sercapcab.pathfinder.game.spell.Spell
 import java.util.*
 
 data class CreatureRequest(
-    val unit: Unit,
-    var isBoss: Boolean
+    var name: String,
+    var level: UInt,
+    var unitArmor: Int,
+    var unitMagicResistance: Int,
+    var unitClass: UnitClass,
+    var creatureStats: UnitStat,
+    val creatureSpells: MutableSet<Spell>,
+    var unitModel: Int,
 ) {
     fun toCreature(): Creature {
         return Creature(
-            creatureUuid = generateUUIDv5(
-                UUID.nameUUIDFromBytes("Game.Entity.Creature".toByteArray()),
-                UUID.randomUUID().toString()
-            ),
-            unit = unit,
-            isBoss = isBoss
+            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Creature".toByteArray()), UUID.randomUUID().toString()),
+            name = name,
+            level = level.coerceAtMost(10u),
+            unitArmor = unitArmor,
+            unitMagicResistance = unitMagicResistance,
+            unitClass = unitClass,
+            creatureStats = creatureStats,
+            creatureSpells = creatureSpells,
+            unitModel = unitModel,
         )
     }
 }

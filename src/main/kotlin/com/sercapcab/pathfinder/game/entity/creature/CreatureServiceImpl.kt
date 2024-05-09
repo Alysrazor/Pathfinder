@@ -11,13 +11,13 @@ class CreatureServiceImpl(@Autowired private val creatureDAO: CreatureDAO): Crea
         return creatureDAO.findAll().toList()
     }
 
-    override fun findByUUID(creatureUUID: UUID): Creature? {
+    override fun findByUUID(creatureUUID: UUID): Creature {
         return creatureDAO.findById(creatureUUID)
-            .orElseThrow() { EntityNotFoundException(Creature::class.java, creatureUUID)}
+            .orElseThrow { EntityNotFoundException(Creature::class.java, creatureUUID)}
     }
 
-    override fun save(creature: Creature): Creature? {
-        return creatureDAO.save(creature)
+    override fun save(creature: Creature) {
+        creatureDAO.save(creature)
     }
 
     override fun delete(creature: Creature) {

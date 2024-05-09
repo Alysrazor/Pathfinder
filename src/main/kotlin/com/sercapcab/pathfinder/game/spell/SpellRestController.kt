@@ -1,6 +1,5 @@
 package com.sercapcab.pathfinder.game.spell
 
-import com.sercapcab.pathfinder.game.entity.unit.UnitService
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
@@ -19,7 +18,7 @@ private const val json = type.APPLICATION_JSON_VALUE
 @AllArgsConstructor
 @RequestMapping("/api/v1/spell")
 class SpellRestController constructor(
-    @Autowired private val spellService: SpellService, @Autowired private val unitService: UnitService
+    @Autowired private val spellService: SpellService
 ) {
 
     @GetMapping(path = [""])

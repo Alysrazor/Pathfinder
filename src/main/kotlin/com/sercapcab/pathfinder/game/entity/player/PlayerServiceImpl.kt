@@ -17,11 +17,7 @@ class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO)
     }
 
     override fun findByPlayerName(playerName: String): Player? {
-        val player: Optional<Player> = playerDAO.findByPlayerName(playerName)
-
-        return playerDAO.findByPlayerName(playerName).orElseThrow {
-            EntityNotFoundException(Player::class.java, playerName)
-        }
+        return playerDAO.findByPlayerName(playerName)
     }
 
     override fun save(player: Player) {

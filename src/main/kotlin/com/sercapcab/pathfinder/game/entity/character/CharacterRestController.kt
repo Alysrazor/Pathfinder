@@ -1,6 +1,7 @@
 package com.sercapcab.pathfinder.game.entity.character
 
 import com.sercapcab.pathfinder.Since
+import com.sercapcab.pathfinder.game.config.json
 import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
@@ -17,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.UUID
-
-typealias type = MediaType
-private const val json = type.APPLICATION_JSON_VALUE
 
 @AllArgsConstructor
 @RestController

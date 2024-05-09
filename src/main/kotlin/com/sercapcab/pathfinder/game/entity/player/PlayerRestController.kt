@@ -1,6 +1,7 @@
 package com.sercapcab.pathfinder.game.entity.player
 
 import com.sercapcab.pathfinder.Since
+import com.sercapcab.pathfinder.game.config.json
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.character.CharacterService
 import com.sercapcab.pathfinder.game.exceptions.EntityAlreadyExistsException
@@ -13,9 +14,6 @@ import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.UUID
-
-typealias type = MediaType
-private const val json = type.APPLICATION_JSON_VALUE
 
 @RestController
 @AllArgsConstructor

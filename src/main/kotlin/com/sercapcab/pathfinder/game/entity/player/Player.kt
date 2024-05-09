@@ -25,11 +25,11 @@ data class Player(
     var playerName: String,
 
     @Column(name = "password", length = 64, nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
     var password: String,
 
     @Column(name = "salt", length = 64, nullable = false)
-    @JsonIgnore
+    //@JsonIgnore
     var salt: String    ,
 
     @Column(name = "android_version")

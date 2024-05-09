@@ -1,14 +1,15 @@
 package com.sercapcab.pathfinder.game.entity.character
 
 import com.sercapcab.pathfinder.Since
-import com.sercapcab.pathfinder.game.entity.unit.Unit
 import com.sercapcab.pathfinder.game.entity.player.Player
-import com.sercapcab.pathfinder.game.security.generateUUIDv5
+import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
+import com.sercapcab.pathfinder.game.enumeration.UnitClass
+import com.sercapcab.pathfinder.game.spell.Spell
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "characters", catalog = "rpg_duels")
@@ -18,15 +19,47 @@ import java.util.UUID
 @Since(version = "1.0")
 data class Character(
     @Id
-    @Column(name = "character_uuid", updatable = false)
-    val characterUuid: UUID,
+    @Column(name = "uuid", nullable = false, updatable = false)
+    val uuid: UUID,
+
+    @Column(name = "name", nullable = false, unique = true)
+    var name: String,
+
+    @Column(name = "level")
+    var level: UInt,
+
+    @Column(name = "unit_armor")
+    var unitArmor: Int,
+
+    @Column(name = "unit_magic_resistance")
+    var unitMagicResistance: Int,
+
+    @Enumerated(EnumType.ORDINAL)
+    @Column(name = "unit_class")
+    var unitClass: UnitClass,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "unit_uuid",
-        foreignKey = ForeignKey(name = "fk_unit_template"),
-        nullable = false,
-        updatable = false)
-    val unit: Unit,
+    @JoinColumn(name = "unit_stats",
+        foreignKey = ForeignKey(name = "fk_unit_stat"),
+        nullable = false)
+    var characterStat: UnitStat,
+
+
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(
+        name = "characters_spell",
+        catalog = "rpg_duels",
+        joinColumns = [
+            JoinColumn(name = "character_uuid", nullable = false)
+        ],
+        inverseJoinColumns = [
+            JoinColumn(name = "spell_uuid", nullable = false)
+        ]
+    )
+    var characterSpells: MutableSet<Spell>,
+
+    @Column(name = "unit_model")
+    var unitModel: Int,
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_uuid",
@@ -41,23 +74,15 @@ data class Character(
 
         other as Character
 
-        if (characterUuid != other.characterUuid) return false
+        if (uuid != other.uuid) return false
+        if (player != other.player) return false
 
         return true
     }
 
     override fun hashCode(): Int {
-        return characterUuid.hashCode()
-    }
-
-    override fun toString(): String {
-        return String.format(
-            "Character: %s%n" +
-                    "Unit: %s%n" +
-                    "Player: %s%n",
-            characterUuid.toString(),
-            unit,
-            player
-        )
+        var result = uuid.hashCode()
+        result = 31 * result + player.hashCode()
+        return result
     }
 }

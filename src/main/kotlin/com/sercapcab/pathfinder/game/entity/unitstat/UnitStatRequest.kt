@@ -1,6 +1,7 @@
-package com.sercapcab.pathfinder.game.entity.unit.unitstat
+package com.sercapcab.pathfinder.game.entity.unitstat
 
-import com.sercapcab.pathfinder.game.entity.unit.Unit
+import com.sercapcab.pathfinder.game.entity.character.Character
+import com.sercapcab.pathfinder.game.entity.creature.Creature
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import java.util.*
 
@@ -12,7 +13,6 @@ data class UnitStatRequest(
     var wisdom: Int,
     var charisma: Int,
     var comment: String,
-    var units: Set<Unit> = setOf()
 ) {
     fun toUnitStat(): UnitStat {
         return UnitStat(
@@ -23,8 +23,7 @@ data class UnitStatRequest(
             intelligence = intelligence,
             wisdom = wisdom,
             charisma = charisma,
-            comment = comment,
-            units = units
+            comment = comment
         )
     }
 }

@@ -2,7 +2,6 @@ package com.sercapcab.pathfinder.game.exceptions.unit
 
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.creature.Creature
-import com.sercapcab.pathfinder.game.entity.unit.Unit
 import java.util.*
 
 /**

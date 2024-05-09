@@ -1,4 +1,4 @@
-package com.sercapcab.pathfinder.game.entity.unit.unitstat
+package com.sercapcab.pathfinder.game.entity.unitstat
 
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired

@@ -2,7 +2,8 @@ package com.sercapcab.pathfinder.game.spell
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
-import com.sercapcab.pathfinder.game.entity.unit.Unit
+import com.sercapcab.pathfinder.game.entity.character.Character
+import com.sercapcab.pathfinder.game.entity.creature.Creature
 import com.sercapcab.pathfinder.game.enumeration.SpellSchool
 import com.sercapcab.pathfinder.game.enumeration.Stat
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
@@ -43,22 +44,13 @@ data class Spell(
     @Column(name = "stat_multiplier")
     var statMultiplier: Double,
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "unitSpells")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "characterSpells")
     @JsonIgnore
-    var units: MutableSet<Unit> = mutableSetOf()
+    var characters: MutableSet<Character> = mutableSetOf(),
 
-    /*@ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "unit_spells", catalog = "rpg_duels",
-        joinColumns = [
-            JoinColumn(name = "spell_uuid", nullable = false)
-        ],
-        inverseJoinColumns = [
-            JoinColumn(name = "unit_uuid", nullable = false)
-        ]
-    )
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "creatureSpells")
     @JsonIgnore
-    var units: MutableSet<Unit> = mutableSetOf()*/
+    var creatures: MutableSet<Creature> = mutableSetOf()
 ) {
     override fun hashCode(): Int {
         var result = spellUuid.hashCode()

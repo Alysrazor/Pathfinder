@@ -1,14 +1,14 @@
-package com.sercapcab.pathfinder.game.entity.unit.unitstat
+package com.sercapcab.pathfinder.game.entity.unitstat
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
-import com.sercapcab.pathfinder.game.entity.unit.Unit
-import com.sercapcab.pathfinder.game.security.generateUUIDv5
+import com.sercapcab.pathfinder.game.entity.character.Character
+import com.sercapcab.pathfinder.game.entity.creature.Creature
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "unit_stat_template", catalog = "rpg_duels")
@@ -42,10 +42,19 @@ data class UnitStat(
     @Column(name = "comment")
     var comment: String,
 
+    @OneToMany(
+        mappedBy = "characterStat",
+        fetch = FetchType.LAZY
+    )
     @JsonIgnore
-    @OneToMany(mappedBy = "unitStat",
-        fetch = FetchType.LAZY)
-    var units: Set<Unit> = setOf()
+    var characters: MutableSet<Character> = mutableSetOf(),
+
+    @OneToMany(
+        mappedBy = "creatureStats",
+        fetch = FetchType.LAZY
+    )
+    @JsonIgnore
+    var creatures: MutableSet<Creature> = mutableSetOf()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

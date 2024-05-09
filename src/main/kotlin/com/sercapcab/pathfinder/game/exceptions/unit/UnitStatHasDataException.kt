@@ -1,11 +1,12 @@
 package com.sercapcab.pathfinder.game.exceptions.unit
 
-import com.sercapcab.pathfinder.game.entity.unit.Unit
-import com.sercapcab.pathfinder.game.entity.unit.unitstat.UnitStat
+import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
+import com.sercapcab.pathfinder.game.entity.character.Character
+import com.sercapcab.pathfinder.game.entity.creature.Creature
 import java.util.*
 
 /**
- * Excepción lanzada cuando una [Unit] tiene una [UnitStat] que se intenta borrar.
+ * Excepción lanzada cuando una [UnitStat] que se intenta borrar es usada por [Character] o [Creature].
  */
 class UnitStatHasDataException: Exception {
     constructor()
