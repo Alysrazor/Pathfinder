@@ -54,16 +54,21 @@ class UnitRestController constructor(@Autowired private val unitService: UnitSer
     fun getAllUnitStats(): ResponseEntity<List<UnitStat>> {
         val unitStats: List<UnitStat> = unitStatService.findAll().toList()
 
-        return ResponseEntity.ok(unitStats)
+        return if (unitStats.isEmpty())
+            ResponseEntity.noContent().build()
+        else
+            ResponseEntity.ok(unitStats)
     }
 
     @GetMapping(path = ["{id}/spells"], produces = [json])
     @NotNull
     fun getAllSpellsFromUnit(@PathVariable id: UUID): ResponseEntity<MutableSet<Spell>> {
-        val unitSpells: MutableSet<Spell>? = unitService.findByUUID(id).unitSpells
-        println(id)
-        unitSpells?.forEach{println(it.spellUuid)}
-        return ResponseEntity.ok(unitSpells)
+        val unitSpells: MutableSet<Spell> = unitService.findByUUID(id).unitSpells
+
+        return if (unitSpells.isEmpty())
+            ResponseEntity.noContent().build()
+        else
+            ResponseEntity.ok(unitSpells)
     }
 
     @GetMapping(path = ["{id}"], produces = [json])

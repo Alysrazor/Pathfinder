@@ -3,6 +3,7 @@ package com.sercapcab.pathfinder.game.entity.player
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.character.CharacterService
+import com.sercapcab.pathfinder.game.exceptions.EntityAlreadyExistsException
 import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
@@ -43,14 +44,19 @@ class PlayerRestController constructor(
     @PostMapping(path = [""], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody player: PlayerRequest): ResponseEntity<Player> {
-        playerService.save(player.toPlayer())
+        val playerToSave = player.toPlayer()
+
+        if (playerService.findByPlayerName(playerToSave.playerName) != null)
+            throw EntityAlreadyExistsException(Player::class.java, playerToSave.playerName)
+
+        playerService.save(playerToSave)
 
         return ResponseEntity
             .created(
-                ServletUriComponentsBuilder.fromCurrentRequest().path("{id}")
+                ServletUriComponentsBuilder.fromCurrentRequest().path("")
                     .buildAndExpand(player).toUri()
             )
-            .body(player.toPlayer())
+            .body(playerToSave)
     }
 
     @PutMapping(path = ["{id}"], produces = [json])

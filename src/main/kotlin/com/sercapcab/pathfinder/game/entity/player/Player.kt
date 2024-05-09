@@ -1,5 +1,6 @@
 package com.sercapcab.pathfinder.game.entity.player
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
@@ -24,9 +25,11 @@ data class Player(
     var playerName: String,
 
     @Column(name = "password", length = 64, nullable = false)
+    @JsonIgnore
     var password: String,
 
     @Column(name = "salt", length = 64, nullable = false)
+    @JsonIgnore
     var salt: String    ,
 
     @Column(name = "android_version")
@@ -34,6 +37,7 @@ data class Player(
 
     @OneToMany(mappedBy = "player",
         fetch = FetchType.LAZY)
+    @JsonIgnore
     var characters: Set<Character> = setOf()
 ) {
     override fun equals(other: Any?): Boolean {

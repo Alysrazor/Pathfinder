@@ -16,6 +16,14 @@ class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO)
             .orElseThrow { EntityNotFoundException(Player::class.java, playerUUID) }
     }
 
+    override fun findByPlayerName(playerName: String): Player? {
+        val player: Optional<Player> = playerDAO.findByPlayerName(playerName)
+
+        return playerDAO.findByPlayerName(playerName).orElseThrow {
+            EntityNotFoundException(Player::class.java, playerName)
+        }
+    }
+
     override fun save(player: Player) {
         playerDAO.save(player)
     }

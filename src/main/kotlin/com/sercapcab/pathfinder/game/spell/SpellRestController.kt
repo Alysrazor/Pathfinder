@@ -22,7 +22,7 @@ class SpellRestController constructor(
     @Autowired private val spellService: SpellService, @Autowired private val unitService: UnitService
 ) {
 
-    @GetMapping(path = ["", "/"])
+    @GetMapping(path = [""])
     @NotNull
     fun getAllSpells(): ResponseEntity<List<Spell>> {
         val spells: List<Spell> = spellService.findAll()
