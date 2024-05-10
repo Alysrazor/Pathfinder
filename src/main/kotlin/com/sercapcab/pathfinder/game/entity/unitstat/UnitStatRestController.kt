@@ -12,13 +12,13 @@ import java.util.*
 
 @RestController
 @AllArgsConstructor
-@RequestMapping("/api/v1/unit")
+@RequestMapping("/api/v1/unit-stat")
 @Since(version = "1.0")
 class UnitStatRestController(
     @Autowired private val unitStatService: UnitStatService
 ){
 
-    @GetMapping(path = ["/stat"], produces = [json])
+    @GetMapping(path = [""], produces = [json])
     @NotNull
     fun getAllUnitStats(): ResponseEntity<List<UnitStat>> {
         val unitStats: List<UnitStat> = unitStatService.findAll().toList()
@@ -29,7 +29,7 @@ class UnitStatRestController(
             ResponseEntity.ok(unitStats)
     }
 
-    @GetMapping(path = ["{id}/stat"], produces = [json])
+    @GetMapping(path = ["{id}"], produces = [json])
     @NotNull
     fun getUnitStat(@PathVariable id: UUID): ResponseEntity<UnitStat> {
         val unitStat: UnitStat = unitStatService.findByUUID(id)
@@ -37,7 +37,7 @@ class UnitStatRestController(
         return ResponseEntity.ok(unitStat)
     }
 
-    @PostMapping(path = ["/stat"], produces = [json])
+    @PostMapping(path = [""], produces = [json])
     @NotNull
     fun create(@RequestBody unitStat: UnitStatRequest): ResponseEntity<UnitStat> {
         val unitStatCreated = unitStatService.save(unitStat.toUnitStat())
@@ -49,7 +49,7 @@ class UnitStatRestController(
             .body(unitStatCreated)
     }
 
-    @PutMapping(path = ["/stat/{id}"], produces = [json])
+    @PutMapping(path = ["{id}"], produces = [json])
     fun updateUnitStats(@RequestBody unitStat: UnitStatRequest, @PathVariable id: UUID): ResponseEntity<UnitStat> {
         val foundUnitStat = unitStatService.findByUUID(id)
 

@@ -1,1 +1,2 @@
-rootProject.name = "pathfinder"
+rootProject.name = "Pathfinder"
+

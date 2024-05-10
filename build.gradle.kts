@@ -38,7 +38,7 @@ dependencies {
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	runtimeOnly("com.mysql:mysql-connector-j")
+	implementation("com.mysql:mysql-connector-j:8.4.0")
 
 	annotationProcessor("org.projectlombok:lombok")
 
