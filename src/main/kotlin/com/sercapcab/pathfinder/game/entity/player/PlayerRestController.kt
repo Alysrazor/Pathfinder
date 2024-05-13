@@ -9,7 +9,6 @@ import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
@@ -37,6 +36,16 @@ class PlayerRestController constructor(
         val characters = playerService.findByUUID(id)?.characters
 
         return ResponseEntity.ok(characters)
+    }
+
+    @GetMapping(path = ["{id}/character"], produces = [json])
+    fun getActiveCharacter(@PathVariable id: UUID): ResponseEntity<Character>? {
+        val activeCharacter = playerService.findByUUID(id)?.currentCharacter
+
+        return if (activeCharacter == null)
+            ResponseEntity.noContent().build()
+        else
+            ResponseEntity.ok(activeCharacter)
     }
 
     @PostMapping(path = [""], produces = [json])
@@ -72,6 +81,24 @@ class PlayerRestController constructor(
                     .buildAndExpand(player).toUri()
             )
             .body(player.toPlayer())
+    }
+
+    @PutMapping(path = ["{id}/character/{idChar}"], produces = [json])
+    @NotNull
+    fun setActiveCharacter(@PathVariable id: UUID, @PathVariable idChar: UUID): ResponseEntity<Player> {
+        val foundCharacter = characterService.findByUUID(idChar)
+        val foundPlayer = playerService.findByUUID(id)
+
+        foundPlayer?.currentCharacter = foundCharacter
+
+        playerService.save(foundPlayer!!)
+
+        return ResponseEntity
+            .created(
+                ServletUriComponentsBuilder.fromCurrentRequest().path("{id}/character{idChar}")
+                    .buildAndExpand(foundPlayer).toUri()
+            )
+            .body(foundPlayer)
     }
 
     @DeleteMapping(path = ["{id}"], produces = [json])

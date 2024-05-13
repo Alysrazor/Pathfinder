@@ -30,15 +30,19 @@ data class Player(
 
     @Column(name = "salt", length = 64, nullable = false)
     //@JsonIgnore
-    var salt: String    ,
+    var salt: String,
 
     @Column(name = "android_version")
     var androidVersion: Int = 9,
 
-    @OneToMany(mappedBy = "player",
-        fetch = FetchType.LAZY)
+    @OneToMany(
+        mappedBy = "player",
+        fetch = FetchType.LAZY
+    )
     @JsonIgnore
-    var characters: Set<Character> = setOf()
+    var characters: Set<Character> = setOf(),
+
+    var currentCharacter: Character? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -65,11 +69,13 @@ data class Player(
                     "Password: %s%n" +
                     "Salt: %s%n" +
                     "Android Version: %d%n",
+            "Current Character: %s%n",
             uuid.toString(),
             playerName,
             password,
             salt,
-            androidVersion
+            androidVersion,
+            currentCharacter.toString()
         )
     }
 }

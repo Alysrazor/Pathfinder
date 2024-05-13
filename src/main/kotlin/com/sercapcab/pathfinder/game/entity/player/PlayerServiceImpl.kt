@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO): PlayerService {
+class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO) : PlayerService {
     override fun findAll(): List<Player> {
         return playerDAO.findAll().toList()
     }
@@ -16,8 +16,11 @@ class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO)
             .orElseThrow { EntityNotFoundException(Player::class.java, playerUUID) }
     }
 
-    override fun findByPlayerName(playerName: String): Player? {
-        return playerDAO.findByPlayerName(playerName)
+    override fun findByPlayerName(playerName: String): Optional<Player> {
+        val player = playerDAO.findByPlayerName(playerName)
+
+        return Optional.ofNullable(player)
+            .orElseThrow { EntityNotFoundException(Player::class.java, playerName) }
     }
 
     override fun save(player: Player) {
