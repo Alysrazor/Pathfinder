@@ -1,5 +1,6 @@
 package com.sercapcab.pathfinder.game.entity.character
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.player.Player
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
@@ -40,7 +41,6 @@ data class Character(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "unit_stats",
-        foreignKey = ForeignKey(name = "fk_unit_stat"),
         nullable = false)
     var characterStat: UnitStat,
 
@@ -63,7 +63,6 @@ data class Character(
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "player_uuid",
-        foreignKey = ForeignKey(name = "fk_player"),
         nullable = false,
         updatable = false)
     val player: Player

@@ -41,8 +41,6 @@ data class Player(
     )
     @JsonIgnore
     var characters: Set<Character> = setOf(),
-
-    var currentCharacter: Character? = null
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -69,13 +67,11 @@ data class Player(
                     "Password: %s%n" +
                     "Salt: %s%n" +
                     "Android Version: %d%n",
-            "Current Character: %s%n",
             uuid.toString(),
             playerName,
             password,
             salt,
             androidVersion,
-            currentCharacter.toString()
         )
     }
 }

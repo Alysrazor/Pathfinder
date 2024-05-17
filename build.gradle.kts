@@ -30,7 +30,7 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	implementation("org.springframework.boot:spring-boot-starter-security")
+	//implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
@@ -39,7 +39,7 @@ dependencies {
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
-	implementation("com.mysql:mysql-connector-j:8.4.0")
+	implementation("com.mysql:mysql-connector-j")
 
 	annotationProcessor("org.projectlombok:lombok")
 

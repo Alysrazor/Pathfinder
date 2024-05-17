@@ -38,22 +38,12 @@ class PlayerRestController constructor(
         return ResponseEntity.ok(characters)
     }
 
-    @GetMapping(path = ["{id}/character"], produces = [json])
-    fun getActiveCharacter(@PathVariable id: UUID): ResponseEntity<Character>? {
-        val activeCharacter = playerService.findByUUID(id)?.currentCharacter
-
-        return if (activeCharacter == null)
-            ResponseEntity.noContent().build()
-        else
-            ResponseEntity.ok(activeCharacter)
-    }
-
     @PostMapping(path = [""], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody player: PlayerRequest): ResponseEntity<Player> {
         val playerToSave = player.toPlayer()
 
-        if (playerService.findByPlayerName(playerToSave.playerName) != null)
+        if (playerService.findByPlayerName(playerToSave.playerName).isPresent)
             throw EntityAlreadyExistsException(Player::class.java, playerToSave.playerName)
 
         playerService.save(playerToSave)
@@ -81,24 +71,6 @@ class PlayerRestController constructor(
                     .buildAndExpand(player).toUri()
             )
             .body(player.toPlayer())
-    }
-
-    @PutMapping(path = ["{id}/character/{idChar}"], produces = [json])
-    @NotNull
-    fun setActiveCharacter(@PathVariable id: UUID, @PathVariable idChar: UUID): ResponseEntity<Player> {
-        val foundCharacter = characterService.findByUUID(idChar)
-        val foundPlayer = playerService.findByUUID(id)
-
-        foundPlayer?.currentCharacter = foundCharacter
-
-        playerService.save(foundPlayer!!)
-
-        return ResponseEntity
-            .created(
-                ServletUriComponentsBuilder.fromCurrentRequest().path("{id}/character{idChar}")
-                    .buildAndExpand(foundPlayer).toUri()
-            )
-            .body(foundPlayer)
     }
 
     @DeleteMapping(path = ["{id}"], produces = [json])

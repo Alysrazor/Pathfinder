@@ -21,8 +21,8 @@ fun generateRandomSalt(): ByteArray {
 }
 
 private const val ALGORITHM = "PBKDF2WithHmacSHA512"
-private const val ITERATIONS = 120_000
-private const val KEY_LENGTH = 256
+private const val ITERATIONS = 210_000
+private const val KEY_LENGTH = 64
 private val SECRET = System.getenv("SECRET")
 
 /**

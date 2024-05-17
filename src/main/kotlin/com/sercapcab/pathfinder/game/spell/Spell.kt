@@ -37,6 +37,9 @@ data class Spell(
     @Column(name = "base_damage")
     var baseDamage: Int,
 
+    @Column(name = "base_mana_cost")
+    var baseManaCost: Int,
+
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "stat_modifier")
     var statModifier: Stat,
@@ -75,6 +78,7 @@ data class Spell(
                     "Descripción: %s%n" +
                     "SpellSchool: %s%n" +
                     "Daño Base: %d%n" +
+                    "Coste de maná: %d%n" +
                     "Estadística del hechizo: %s%n" +
                     "Multiplicador de Estadística: %.2f%n",
             spellUuid.toString(),
@@ -82,6 +86,7 @@ data class Spell(
             spellDescription,
             spellSchool.name,
             baseDamage,
+            baseManaCost,
             statModifier.statName,
             statMultiplier)
     }
