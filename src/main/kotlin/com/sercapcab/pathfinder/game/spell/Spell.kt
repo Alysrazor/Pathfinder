@@ -6,7 +6,6 @@ import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.creature.Creature
 import com.sercapcab.pathfinder.game.enumeration.SpellSchool
 import com.sercapcab.pathfinder.game.enumeration.Stat
-import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
@@ -37,8 +36,8 @@ data class Spell(
     @Column(name = "base_damage")
     var baseDamage: Int,
 
-    @Column(name = "base_mana_cost")
-    var baseManaCost: Int,
+    @Column(name = "base_power_cost")
+    var basePowerCost: Int,
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "stat_modifier")
@@ -86,7 +85,7 @@ data class Spell(
             spellDescription,
             spellSchool.name,
             baseDamage,
-            baseManaCost,
+            basePowerCost,
             statModifier.statName,
             statMultiplier)
     }

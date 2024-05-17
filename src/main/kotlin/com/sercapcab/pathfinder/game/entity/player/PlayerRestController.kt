@@ -5,6 +5,8 @@ import com.sercapcab.pathfinder.game.config.json
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.character.CharacterService
 import com.sercapcab.pathfinder.game.exceptions.EntityAlreadyExistsException
+import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
+import com.sercapcab.pathfinder.game.security.checkPassword
 import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
@@ -28,6 +30,17 @@ class PlayerRestController constructor(
         val players = playerService.findAll().toList()
 
         return ResponseEntity.ok(players)
+    }
+
+    @GetMapping(path = ["{username}"], produces = [json])
+    @NotNull
+    fun getSinglePlayer(@PathVariable username: String): ResponseEntity<Player> {
+        val player = playerService.findByPlayerName(username)
+        
+        return if (player.isPresent)
+            ResponseEntity.ok(player.get())
+        else
+            throw EntityNotFoundException(Player::class.java, username)
     }
 
     @GetMapping(path = ["{id}/characters"], produces = [json])

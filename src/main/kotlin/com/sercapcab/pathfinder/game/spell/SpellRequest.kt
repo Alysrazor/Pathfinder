@@ -21,7 +21,7 @@ data class SpellRequest(
             spellDescription = spellDescription,
             spellSchool = spellSchool,
             baseDamage = baseDamage,
-            baseManaCost = baseManaCost,
+            basePowerCost = baseManaCost,
             statModifier = statModifier,
             statMultiplier = statMultiplier
         )

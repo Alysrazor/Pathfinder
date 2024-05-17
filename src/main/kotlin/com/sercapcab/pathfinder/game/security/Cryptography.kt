@@ -22,7 +22,7 @@ fun generateRandomSalt(): ByteArray {
 
 private const val ALGORITHM = "PBKDF2WithHmacSHA512"
 private const val ITERATIONS = 210_000
-private const val KEY_LENGTH = 64
+private const val KEY_LENGTH = 256
 private val SECRET = System.getenv("SECRET")
 
 /**
@@ -32,7 +32,7 @@ private val SECRET = System.getenv("SECRET")
  */
 fun hashPassword(password: String): Array<String> {
     val salt = generateRandomSalt().toHexString()
-    val combinedSalt = "$salt$SECRET"
+    val combinedSalt = "${salt.toByteArray().toHexString()}${SECRET.toByteArray().toHexString()}"
 
     val factory: SecretKeyFactory = SecretKeyFactory.getInstance(ALGORITHM)
     val keySpec: KeySpec = PBEKeySpec(password.toCharArray(), combinedSalt.toByteArray(), ITERATIONS, KEY_LENGTH)
