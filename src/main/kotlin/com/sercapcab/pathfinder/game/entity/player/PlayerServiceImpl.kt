@@ -2,6 +2,7 @@ package com.sercapcab.pathfinder.game.entity.player
 
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
 
@@ -24,6 +25,8 @@ class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO)
     }
 
     override fun save(player: Player) {
+        player.password = BCryptPasswordEncoder().encode(player.password)
+
         playerDAO.save(player)
     }
 

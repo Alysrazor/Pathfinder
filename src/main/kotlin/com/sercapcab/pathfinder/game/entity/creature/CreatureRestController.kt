@@ -17,7 +17,7 @@ import java.util.UUID
 @RequestMapping("/api/v1/creature")
 @Since(version = "1.0")
 class CreatureRestController constructor(@Autowired private val creatureService: CreatureService) {
-    @GetMapping(path = [""], produces = [json])
+    @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllCreatures(): ResponseEntity<List<Creature>> {
         val creatures: List<Creature> = creatureService.findAll().toList()

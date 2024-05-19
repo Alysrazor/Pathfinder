@@ -1,4 +1,4 @@
-package com.sercapcab.pathfinder.game.spell
+package com.sercapcab.pathfinder.game.entity.spell
 
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired

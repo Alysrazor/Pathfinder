@@ -2,8 +2,8 @@ package com.sercapcab.pathfinder.game.entity.player
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
+import com.sercapcab.pathfinder.game.entity.role.Role
 import com.sercapcab.pathfinder.game.entity.character.Character
-import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data
@@ -28,12 +28,15 @@ data class Player(
     //@JsonIgnore
     var password: String,
 
-    @Column(name = "salt", length = 64, nullable = false)
-    //@JsonIgnore
-    var salt: String,
-
     @Column(name = "android_version")
     var androidVersion: Int = 9,
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(
+        name = "role_id",
+        nullable = false
+    )
+    var playerRole: Role,
 
     @OneToMany(
         mappedBy = "player",
@@ -65,12 +68,14 @@ data class Player(
             "Player: %s%n" +
                     "Name: %s%n" +
                     "Password: %s%n" +
-                    "Salt: %s%n" +
+                    "Rol: %s%n" +
+                    "Permisos: %s%n" +
                     "Android Version: %d%n",
             uuid.toString(),
             playerName,
             password,
-            salt,
+            playerRole,
+            playerRole.rolePermissions.joinToString(separator = "\n"),
             androidVersion,
         )
     }

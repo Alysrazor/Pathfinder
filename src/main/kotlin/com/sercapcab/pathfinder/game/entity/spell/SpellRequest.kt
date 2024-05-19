@@ -1,4 +1,4 @@
-package com.sercapcab.pathfinder.game.spell
+package com.sercapcab.pathfinder.game.entity.spell
 
 import com.sercapcab.pathfinder.game.enumeration.SpellSchool
 import com.sercapcab.pathfinder.game.enumeration.Stat

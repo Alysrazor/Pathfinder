@@ -3,7 +3,7 @@ package com.sercapcab.pathfinder.game.entity.creature
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.enumeration.UnitClass
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
-import com.sercapcab.pathfinder.game.spell.Spell
+import com.sercapcab.pathfinder.game.entity.spell.Spell
 import java.util.*
 
 data class CreatureRequest(

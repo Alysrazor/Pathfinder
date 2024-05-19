@@ -1,4 +1,4 @@
-package com.sercapcab.pathfinder.game.spell
+package com.sercapcab.pathfinder.game.entity.spell
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since

@@ -2,16 +2,17 @@ package com.sercapcab.pathfinder.game.entity.player
 
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.config.json
+import com.sercapcab.pathfinder.game.entity.role.Role
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.character.CharacterService
 import com.sercapcab.pathfinder.game.exceptions.EntityAlreadyExistsException
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
-import com.sercapcab.pathfinder.game.security.checkPassword
 import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
+import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.UUID
@@ -19,8 +20,9 @@ import java.util.UUID
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/player")
+@PreAuthorize("denyAll()")
 @Since(version = "1.0")
-class PlayerRestController constructor(
+class PlayerRestController(
     @Autowired private val playerService: PlayerService,
     @Autowired private val characterService: CharacterService) {
 
@@ -39,6 +41,17 @@ class PlayerRestController constructor(
         
         return if (player.isPresent)
             ResponseEntity.ok(player.get())
+        else
+            throw EntityNotFoundException(Player::class.java, username)
+    }
+
+    @GetMapping(path = ["{username}/role"], produces = [json])
+    @NotNull
+    fun getPlayerRole(@PathVariable username: String): ResponseEntity<Role> {
+        val player = playerService.findByPlayerName(username)
+
+        return if (player.isPresent)
+            ResponseEntity.ok(player.get().playerRole)
         else
             throw EntityNotFoundException(Player::class.java, username)
     }

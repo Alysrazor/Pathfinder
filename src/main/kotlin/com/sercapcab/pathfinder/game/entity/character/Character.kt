@@ -5,7 +5,7 @@ import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.player.Player
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.enumeration.UnitClass
-import com.sercapcab.pathfinder.game.spell.Spell
+import com.sercapcab.pathfinder.game.entity.spell.Spell
 import jakarta.persistence.*
 import lombok.AllArgsConstructor
 import lombok.Data

@@ -24,7 +24,7 @@ import java.util.UUID
 @RequestMapping("/api/v1/character")
 @Since(version = "1.0")
 class CharacterRestController constructor(@Autowired private val characterService: CharacterService) {
-    @GetMapping(path = [""], produces = [json])
+    @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllCharacters(): ResponseEntity<List<Character>> {
         val characters: List<Character> = characterService.findAll().toList()
