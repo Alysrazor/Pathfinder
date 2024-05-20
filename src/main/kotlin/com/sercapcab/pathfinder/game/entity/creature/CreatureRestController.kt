@@ -41,7 +41,7 @@ class CreatureRestController constructor(@Autowired private val creatureService:
             .body(creature)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody creature: CreatureRequest): ResponseEntity<Creature> {
         val creatureToSave = creature.toCreature()

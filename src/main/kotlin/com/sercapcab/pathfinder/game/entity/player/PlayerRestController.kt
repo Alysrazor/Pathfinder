@@ -20,13 +20,12 @@ import java.util.UUID
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/v1/player")
-@PreAuthorize("denyAll()")
 @Since(version = "1.0")
 class PlayerRestController(
     @Autowired private val playerService: PlayerService,
     @Autowired private val characterService: CharacterService) {
 
-    @GetMapping(path = [""], produces = [json])
+    @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllPlayers(): ResponseEntity<List<Player>> {
         val players = playerService.findAll().toList()
@@ -64,7 +63,7 @@ class PlayerRestController(
         return ResponseEntity.ok(characters)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody player: PlayerRequest): ResponseEntity<Player> {
         val playerToSave = player.toPlayer()

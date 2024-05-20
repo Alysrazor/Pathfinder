@@ -37,7 +37,7 @@ class UnitStatRestController(
         return ResponseEntity.ok(unitStat)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@RequestBody unitStat: UnitStatRequest): ResponseEntity<UnitStat> {
         val unitStatCreated = unitStatService.save(unitStat.toUnitStat())

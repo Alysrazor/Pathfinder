@@ -42,7 +42,7 @@ class RolePermissionRestController(
             throw EntityNotFoundException(RolePermission::class.java, rolePermission)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun createRolePermission(@Valid @RequestBody requestRolePermission: RolePermissionRequest): ResponseEntity<RolePermission> {
         val rolePermissionToSave = requestRolePermission.toRolePermission()

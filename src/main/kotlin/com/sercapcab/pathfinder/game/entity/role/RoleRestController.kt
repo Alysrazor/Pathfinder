@@ -24,9 +24,10 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 @RequestMapping("/api/v1/role")
 @Since(version = "1.0")
 class RoleRestController(
-    @Autowired private val roleService: RoleService
+    @Autowired private val roleService: RoleService,
+    @Autowired private val rolePermissionService: RolePermissionService
 ) {
-    @GetMapping(path = [""], produces = [json])
+    @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllRoles(): ResponseEntity<List<Role>> {
         val roles = roleService.findAll()
@@ -48,13 +49,23 @@ class RoleRestController(
             throw EntityNotFoundException(Role::class.java, roleName)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun createRol(@Valid @RequestBody role: RoleRequest): ResponseEntity<Role> {
         val roleToSave = role.toRole()
 
         if (roleService.findByRoleName(roleToSave.roleName).isPresent)
             throw EntityAlreadyExistsException(Role::class.java, roleToSave.roleName)
+
+        if (roleToSave.rolePermissions.isNotEmpty()) {
+            val permissions = roleToSave.rolePermissions
+
+            // Si no está el permiso lo añado
+            permissions.forEach { permission ->
+                if (!rolePermissionService.findByRolePermission(permission.rolePermission).isPresent)
+                    rolePermissionService.save(permission)
+            }
+        }
 
         roleService.save(roleToSave)
 

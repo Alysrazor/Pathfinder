@@ -11,15 +11,15 @@ import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
 
-@RestController
-@AllArgsConstructor
-@RequestMapping("/api/v1/user")
-@Since(version = "1.0")
-class bla(@Autowired private val userDetailsServiceImpl: UserDetailsServiceImpl) {
-    @GetMapping("{user}", produces = [json])
-    fun getUser(@PathVariable user: String): ResponseEntity<UserDetails> {
-        val userd = userDetailsServiceImpl.loadUserByUsername(user)
-
-        return ResponseEntity.ok(userd)
-    }
-}
+//@RestController
+//@AllArgsConstructor
+//@RequestMapping("/api/v1/user")
+//@Since(version = "1.0")
+//class UserDetailsController(@Autowired private val userDetailsServiceImpl: UserDetailsServiceImpl) {
+//    @GetMapping("{user}", produces = [json])
+//    fun getUser(@PathVariable user: String): ResponseEntity<UserDetails> {
+//        val userd = userDetailsServiceImpl.loadUserByUsername(user)
+//
+//        return ResponseEntity.ok(userd)
+//    }
+//}

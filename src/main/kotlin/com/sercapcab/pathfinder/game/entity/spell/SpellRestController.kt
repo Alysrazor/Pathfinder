@@ -40,7 +40,7 @@ class SpellRestController constructor(
         return ResponseEntity.ok(spell)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@RequestBody spell: SpellRequest): ResponseEntity<Spell> {
         val spellCreated: Spell = spellService.save(spell.toSpell())

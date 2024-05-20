@@ -40,7 +40,7 @@ class CharacterRestController constructor(@Autowired private val characterServic
         return ResponseEntity.ok(character)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody character: CharacterRequest): ResponseEntity<Character> {
         characterService.save(character.toCharacter())
