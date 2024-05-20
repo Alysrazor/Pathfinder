@@ -4,18 +4,10 @@ import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.player.Player
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.Data
-import lombok.NoArgsConstructor
 
 
 @Entity
 @Table(name = "role", catalog = "rpg_duels")
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
-@Data
 @Since(version = "1.0")
 data class Role(
     @Id

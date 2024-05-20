@@ -7,16 +7,10 @@ import com.sercapcab.pathfinder.game.entity.creature.Creature
 import com.sercapcab.pathfinder.game.enumeration.SpellSchool
 import com.sercapcab.pathfinder.game.enumeration.Stat
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Data
-import lombok.NoArgsConstructor
 import java.util.*
 
 @Entity
 @Table(name = "spell_template", catalog = "rpg_duels")
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Since(version = "1.0")
 data class Spell(
     @Id

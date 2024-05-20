@@ -3,17 +3,9 @@ package com.sercapcab.pathfinder.game.entity.role
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Builder
-import lombok.Data
-import lombok.NoArgsConstructor
 
 @Entity
 @Table(name = "role_permission", catalog = "rpg_duels")
-@AllArgsConstructor
-@Builder
-@NoArgsConstructor
-@Data
 @Since(version = "1.0")
 data class RolePermission(
     @Id
