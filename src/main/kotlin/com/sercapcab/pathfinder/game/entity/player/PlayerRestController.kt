@@ -5,6 +5,7 @@ import com.sercapcab.pathfinder.game.config.json
 import com.sercapcab.pathfinder.game.entity.role.Role
 import com.sercapcab.pathfinder.game.entity.character.Character
 import com.sercapcab.pathfinder.game.entity.character.CharacterService
+import com.sercapcab.pathfinder.game.entity.role.RoleService
 import com.sercapcab.pathfinder.game.exceptions.EntityAlreadyExistsException
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import jakarta.validation.Valid
@@ -12,10 +13,10 @@ import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.ResponseEntity
-import org.springframework.security.access.prepost.PreAuthorize
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 import java.util.UUID
+import kotlin.jvm.optionals.getOrNull
 
 @RestController
 @AllArgsConstructor
@@ -23,6 +24,7 @@ import java.util.UUID
 @Since(version = "1.0")
 class PlayerRestController(
     @Autowired private val playerService: PlayerService,
+    @Autowired private val roleService: RoleService,
     @Autowired private val characterService: CharacterService) {
 
     @GetMapping(path = ["/"], produces = [json])

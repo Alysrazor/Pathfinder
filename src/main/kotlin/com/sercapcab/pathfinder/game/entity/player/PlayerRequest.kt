@@ -11,15 +11,15 @@ data class PlayerRequest(
     var playerName: String,
     var password: String,
     var androidVersion: Int = 9,
-    var playerRole: String
+    var playerRole: Role
 ) {
-    fun toPlayer(@Autowired roleService: RoleService): Player {
+    fun toPlayer(): Player {
         return Player(
             uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Player".toByteArray()), playerName),
             playerName = playerName,
-            password = BCryptPasswordEncoder().encode(password),
+            password = password,
             androidVersion = androidVersion,
-            playerRole = roleService.findByRoleName(playerRole).get()
+            playerRole = playerRole
         )
     }
 }

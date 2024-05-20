@@ -27,7 +27,6 @@ class SecurityConfig {
     @Bean
     fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity
-            .csrf { csrf -> csrf.disable() }
             .authorizeHttpRequests { http ->
                 // Ruta Auth ( Ruta de prueba )
                 http.requestMatchers("/api/v1/auth/ping").permitAll()
@@ -42,7 +41,7 @@ class SecurityConfig {
                 http.requestMatchers(HttpMethod.GET,
                     "/api/v1/creature/**",
                     "/api/v1/spell/**"
-                ).hasAuthority("READ_GAME_DATA")
+                ).hasRole("ADMIN")
 
                 http.requestMatchers(HttpMethod.POST,
                     "/api/v1/unit-stat/**",
@@ -83,23 +82,19 @@ class SecurityConfig {
                 // Ruta de Roles
                 http.requestMatchers(HttpMethod.GET,
                     "/api/v1/role/**",
-                    "/api/v1/role-permission/**")
-                    .hasRole("ROLE_ADMINISTRATOR")
+                    "/api/v1/role-permission/**").hasRole("ADMIN")
 
                 http.requestMatchers(HttpMethod.POST,
                     "/api/v1/role/**",
-                    "/api/v1/role-permission/**")
-                    .hasRole("ROLE_ADMINISTRATOR")
+                    "/api/v1/role-permission/**").hasAuthority("MANAGE_ROLES")
 
                 http.requestMatchers(HttpMethod.PUT,
                     "/api/v1/role/**",
-                    "/api/v1/role-permission/**")
-                    .hasRole("ROLE_ADMINISTRATOR")
+                    "/api/v1/role-permission/**").hasAuthority("MANAGE_ROLES")
 
                 http.requestMatchers(HttpMethod.DELETE,
                     "/api/v1/role/**",
-                    "/api/v1/role-permission/**")
-                    .hasRole("ROLE_ADMINISTRATOR")
+                    "/api/v1/role-permission/**").hasAuthority("MANAGE_ROLES")
             }
             .httpBasic(Customizer.withDefaults())
 
@@ -130,7 +125,6 @@ class SecurityConfig {
                 User
                     .withUsername("Alysrazor")
                     .password(passwordEncoder().encode("alysrazor"))
-                    .roles("ADMINISTRATOR", "DEVELOPER", "USER", "GUEST")
                     .authorities(
                         "READ_GAME_DATA",
                         "READ_PLAYER_DATA",
@@ -139,7 +133,8 @@ class SecurityConfig {
                         "UPDATE_GAME_DATA",
                         "UPDATE_PLAYER_DATA",
                         "DELETE_GAME_DATA",
-                        "DELETE_PLAYER_DATA"
+                        "DELETE_PLAYER_DATA",
+                        "MANAGE_ROLES"
                     )
                     .build(),
                 User

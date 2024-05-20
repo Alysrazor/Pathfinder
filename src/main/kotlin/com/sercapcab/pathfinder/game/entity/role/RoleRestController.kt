@@ -57,16 +57,6 @@ class RoleRestController(
         if (roleService.findByRoleName(roleToSave.roleName).isPresent)
             throw EntityAlreadyExistsException(Role::class.java, roleToSave.roleName)
 
-        if (roleToSave.rolePermissions.isNotEmpty()) {
-            val permissions = roleToSave.rolePermissions
-
-            // Si no está el permiso lo añado
-            permissions.forEach { permission ->
-                if (!rolePermissionService.findByRolePermission(permission.rolePermission).isPresent)
-                    rolePermissionService.save(permission)
-            }
-        }
-
         roleService.save(roleToSave)
 
         return ResponseEntity
@@ -83,7 +73,7 @@ class RoleRestController(
         val foundRole = roleService.findById(roleId)
 
         foundRole.get().roleName = role.roleName
-        foundRole.get().rolePermissions = role.rolePermissions
+        foundRole.get().rolePermissions = role.rolePermissions.map{ it.toRolePermission() }.toSet()
 
         return ResponseEntity
             .created(

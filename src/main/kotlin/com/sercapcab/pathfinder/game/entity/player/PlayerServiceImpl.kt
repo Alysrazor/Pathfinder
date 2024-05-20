@@ -1,13 +1,16 @@
 package com.sercapcab.pathfinder.game.entity.player
 
+import com.sercapcab.pathfinder.game.entity.role.Role
+import com.sercapcab.pathfinder.game.entity.role.RoleDAO
 import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.stereotype.Service
 import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 @Service
-class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO) : PlayerService {
+class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO, private val roleDAO: RoleDAO) : PlayerService {
     override fun findAll(): List<Player> {
         return playerDAO.findAll().toList()
     }
@@ -25,7 +28,12 @@ class PlayerServiceImpl @Autowired constructor(private val playerDAO: PlayerDAO)
     }
 
     override fun save(player: Player) {
+        val playerRole: Role? = roleDAO.findByRoleName(player.playerRole.roleName).getOrNull()
+
         player.password = BCryptPasswordEncoder().encode(player.password)
+
+        if (playerRole == null)
+            roleDAO.save(player.playerRole)
 
         playerDAO.save(player)
     }

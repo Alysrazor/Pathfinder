@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class RoleServiceImpl @Autowired constructor(private val roleDAO: RoleDAO): RoleService {
+class RoleServiceImpl @Autowired constructor(private val roleDAO: RoleDAO, private val rolePermissionDAO: RolePermissionDAO): RoleService {
     override fun findAll(): List<Role> {
         return roleDAO.findAll().toList()
     }
@@ -22,6 +22,13 @@ class RoleServiceImpl @Autowired constructor(private val roleDAO: RoleDAO): Role
     }
 
     override fun save(role: Role) {
+        val rolePermissions: Set<RolePermission> = role.rolePermissions
+
+        rolePermissions.forEach { permission ->
+            if (!rolePermissionDAO.findByRolePermission(permission.rolePermission).isPresent)
+                rolePermissionDAO.save(permission)
+        }
+
         roleDAO.save(role)
     }
 
