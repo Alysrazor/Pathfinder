@@ -30,12 +30,9 @@ dependencies {
 	implementation("org.springframework.boot:spring-boot-starter-data-rest")
 	implementation("org.springframework.boot:spring-boot-starter-web")
 	implementation("org.springframework.boot:spring-boot-starter-validation")
-	//implementation("org.springframework.boot:spring-boot-starter-security")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
-
-	compileOnly("org.projectlombok:lombok")
 
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 

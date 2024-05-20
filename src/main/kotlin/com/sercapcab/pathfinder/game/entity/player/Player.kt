@@ -3,18 +3,11 @@ package com.sercapcab.pathfinder.game.entity.player
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.character.Character
-import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Data
-import lombok.NoArgsConstructor
-import java.util.UUID
+import java.util.*
 
 @Entity
 @Table(name = "player", catalog = "rpg_duels")
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Since(version = "1.0")
 data class Player(
     @Id

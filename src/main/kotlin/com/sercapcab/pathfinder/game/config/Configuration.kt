@@ -4,7 +4,7 @@ import com.sercapcab.pathfinder.game.entity.player.Player
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStatService
 import com.sercapcab.pathfinder.game.security.checkPassword
 import com.sercapcab.pathfinder.game.security.generateRandomSecret
-import com.sercapcab.pathfinder.game.spell.SpellService
+import com.sercapcab.pathfinder.game.entity.spell.SpellService
 import org.jetbrains.annotations.NotNull
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
