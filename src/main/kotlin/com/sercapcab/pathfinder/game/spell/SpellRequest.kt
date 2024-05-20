@@ -12,7 +12,8 @@ data class SpellRequest(
     var baseDamage: Int,
     var baseManaCost: Int,
     var statModifier: Stat,
-    var statMultiplier: Double
+    var statMultiplier: Double,
+    var spellModel: Int
 ) {
     fun toSpell(): Spell {
         return Spell(
@@ -23,7 +24,8 @@ data class SpellRequest(
             baseDamage = baseDamage,
             basePowerCost = baseManaCost,
             statModifier = statModifier,
-            statMultiplier = statMultiplier
+            statMultiplier = statMultiplier,
+            spellModel = spellModel
         )
     }
 }

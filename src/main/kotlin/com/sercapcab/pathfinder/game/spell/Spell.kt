@@ -46,6 +46,9 @@ data class Spell(
     @Column(name = "stat_multiplier")
     var statMultiplier: Double,
 
+    @Column(name = "spell_model")
+    var spellModel: Int,
+
     @ManyToMany(fetch = FetchType.LAZY, mappedBy = "characterSpells")
     @JsonIgnore
     var characters: MutableSet<Character> = mutableSetOf(),
@@ -79,7 +82,8 @@ data class Spell(
                     "Daño Base: %d%n" +
                     "Coste de maná: %d%n" +
                     "Estadística del hechizo: %s%n" +
-                    "Multiplicador de Estadística: %.2f%n",
+                    "Multiplicador de Estadística: %.2f%n" +
+                    "Modelo: %d%n",
             spellUuid.toString(),
             spellName,
             spellDescription,
@@ -87,6 +91,8 @@ data class Spell(
             baseDamage,
             basePowerCost,
             statModifier.statName,
-            statMultiplier)
+            statMultiplier,
+            spellModel
+        )
     }
 }
