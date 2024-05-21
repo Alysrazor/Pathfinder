@@ -2,6 +2,7 @@ package com.sercapcab.pathfinder.game.security
 
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.authentication.AuthenticationManager
 import org.springframework.security.authentication.AuthenticationProvider
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider
@@ -23,8 +24,10 @@ class SecurityConfig {
             .csrf { csrf -> csrf.disable() }
             .sessionManagement { session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { http ->
-                http.anyRequest().permitAll()
-
+                http
+                // Request de Auth
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
+                    .anyRequest().permitAll()
             }
             .httpBasic(Customizer.withDefaults())
 
