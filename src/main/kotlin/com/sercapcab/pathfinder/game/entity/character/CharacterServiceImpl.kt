@@ -6,25 +6,25 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class CharacterServiceImpl @Autowired constructor(private val characterDAO: CharacterDAO): CharacterService {
+class CharacterServiceImpl @Autowired constructor(private val characterRepository: CharacterRepository): CharacterService {
     override fun findAll(): List<Character> {
-        return characterDAO.findAll().toList()
+        return characterRepository.findAll().toList()
     }
 
     override fun findByUUID(characterUUID: UUID): Character {
-        return characterDAO.findById(characterUUID)
+        return characterRepository.findById(characterUUID)
             .orElseThrow { EntityNotFoundException(Character::class.java, characterUUID) }
     }
 
     override fun save(character: Character){
-        characterDAO.save(character)
+        characterRepository.save(character)
     }
 
     override fun delete(character: Character) {
-        characterDAO.delete(character)
+        characterRepository.delete(character)
     }
 
     override fun delete(characterUUID: UUID) {
-        characterDAO.deleteById(characterUUID)
+        characterRepository.deleteById(characterUUID)
     }
 }

@@ -18,7 +18,7 @@ data class CreatureRequest(
 ) {
     fun toCreature(): Creature {
         return Creature(
-            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Creature".toByteArray()), UUID.randomUUID().toString()),
+            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Creature".toByteArray())),
             name = name,
             level = level.coerceAtMost(10u),
             unitArmor = unitArmor,

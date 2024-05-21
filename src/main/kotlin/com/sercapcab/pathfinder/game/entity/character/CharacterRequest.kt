@@ -1,10 +1,10 @@
 package com.sercapcab.pathfinder.game.entity.character
 
-import com.sercapcab.pathfinder.game.entity.player.Player
+import com.sercapcab.pathfinder.game.entity.account.Account
+import com.sercapcab.pathfinder.game.entity.spell.Spell
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.enumeration.UnitClass
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
-import com.sercapcab.pathfinder.game.entity.spell.Spell
 import java.util.*
 
 data class CharacterRequest(
@@ -16,11 +16,11 @@ data class CharacterRequest(
     var characterStat: UnitStat,
     val characterSpells: MutableSet<Spell>,
     var unitModel: Int,
-    val player: Player
+    val account: Account
 ) {
     fun toCharacter(): Character {
         return Character(
-            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Character".toByteArray()), UUID.randomUUID().toString()),
+            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Character".toByteArray())),
             name = name,
             level = level.coerceAtMost(10u),
             unitArmor = unitArmor,
@@ -29,7 +29,7 @@ data class CharacterRequest(
             characterStat = characterStat,
             characterSpells = characterSpells,
             unitModel = unitModel,
-            player = player
+            account = account
         )
     }
 }

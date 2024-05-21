@@ -1,7 +1,7 @@
 package com.sercapcab.pathfinder.game.entity.character
 
 import com.sercapcab.pathfinder.Since
-import com.sercapcab.pathfinder.game.entity.player.Player
+import com.sercapcab.pathfinder.game.entity.account.Account
 import com.sercapcab.pathfinder.game.entity.spell.Spell
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.enumeration.UnitClass
@@ -55,10 +55,10 @@ data class Character(
     var unitModel: Int,
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "player_uuid",
+    @JoinColumn(name = "account_uuid",
         nullable = false,
         updatable = false)
-    val player: Player
+    val account: Account
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -67,14 +67,14 @@ data class Character(
         other as Character
 
         if (uuid != other.uuid) return false
-        if (player != other.player) return false
+        if (account != other.account) return false
 
         return true
     }
 
     override fun hashCode(): Int {
         var result = uuid.hashCode()
-        result = 31 * result + player.hashCode()
+        result = 31 * result + account.hashCode()
         return result
     }
 }

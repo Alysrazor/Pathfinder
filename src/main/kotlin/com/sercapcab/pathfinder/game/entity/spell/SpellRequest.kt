@@ -16,7 +16,7 @@ data class SpellRequest(
 ) {
     fun toSpell(): Spell {
         return Spell(
-            spellUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Spell".toByteArray()), UUID.randomUUID().toString()),
+            spellUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Spell".toByteArray())),
             spellName = spellName,
             spellDescription = spellDescription,
             spellSchool = spellSchool,

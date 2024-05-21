@@ -1,42 +1,34 @@
 package com.sercapcab.pathfinder.game.entity.role
 
-import com.sercapcab.pathfinder.game.exceptions.EntityNotFoundException
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import java.util.*
 
 @Service
-class RoleServiceImpl @Autowired constructor(private val roleDAO: RoleDAO, private val rolePermissionDAO: RolePermissionDAO): RoleService {
-    override fun findAll(): List<Role> {
-        return roleDAO.findAll().toList()
+class RoleServiceImpl @Autowired constructor(
+    private val roleRepository: RoleRepository
+) : RoleService {
+
+    override fun findAll(): Iterable<Role> {
+        return roleRepository.findAll()
     }
 
-    override fun findById(id: Int): Optional<Role> {
-        return Optional.ofNullable(roleDAO.findById(id))
-            .orElseThrow { EntityNotFoundException(Role::class.java, id.toLong()) }
-    }
-
-    override fun findByRoleName(roleName: String): Optional<Role> {
-        return Optional.ofNullable(roleDAO.findByRoleName(roleName))
-            .orElseThrow { EntityNotFoundException(Role::class.java, roleName) }
+    override fun findById(roleId: Long): Role? {
+        return roleRepository.findById(roleId).orElse(null)
     }
 
     override fun save(role: Role) {
-        val rolePermissions: Set<RolePermission> = role.rolePermissions
-
-        rolePermissions.forEach { permission ->
-            if (!rolePermissionDAO.findByRolePermission(permission.rolePermission).isPresent)
-                rolePermissionDAO.save(permission)
-        }
-
-        roleDAO.save(role)
+        roleRepository.save(role)
     }
 
     override fun delete(role: Role) {
-        roleDAO.delete(role)
+        roleRepository.delete(role)
     }
 
-    override fun delete(id: Int) {
-        roleDAO.deleteById(id)
+    override fun deleteById(roleId: Long) {
+        roleRepository.deleteById(roleId)
+    }
+
+    override fun findByRoleName(roleName: RoleEnum): Role? {
+        return roleRepository.findByRoleName(roleName)
     }
 }

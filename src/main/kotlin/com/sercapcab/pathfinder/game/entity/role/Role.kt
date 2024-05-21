@@ -1,37 +1,15 @@
 package com.sercapcab.pathfinder.game.entity.role
 
-import com.fasterxml.jackson.annotation.JsonIgnore
-import com.sercapcab.pathfinder.Since
-import com.sercapcab.pathfinder.game.entity.player.Player
 import jakarta.persistence.*
 
-
 @Entity
-@Table(name = "role", catalog = "rpg_duels")
-@Since(version = "1.0")
+@Table(name = "role")
 data class Role(
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    val roleId: Long? = null,
+    val roleId: Long?,
 
-    @Column(name = "role_name", unique = true, nullable = false)
-    var roleName: String,
-
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(
-        name = "role_has_permission",
-        catalog = "rpg_duels",
-        joinColumns = [
-            JoinColumn(name = "role_id", nullable = false)
-        ],
-        inverseJoinColumns = [
-            JoinColumn(name = "permission_id", nullable = false)
-        ]
-    )
-    var rolePermissions: Set<RolePermission> = setOf(),
-
-    @OneToMany(fetch = FetchType.LAZY,
-        mappedBy = "playerRole")
-    @JsonIgnore
-    val players: List<Player> = listOf()
+    @Column(name = "role_name")
+    @Enumerated(EnumType.STRING)
+    var roleName: RoleEnum
 )
