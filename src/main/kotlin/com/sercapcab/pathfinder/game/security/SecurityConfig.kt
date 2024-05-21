@@ -14,20 +14,38 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
 import org.springframework.security.crypto.password.PasswordEncoder
 import org.springframework.security.web.SecurityFilterChain
+import kotlin.jvm.Throws
 
 @Configuration
 @EnableMethodSecurity
 class SecurityConfig {
     @Bean
+    @Throws(Exception::class)
     fun securityFilterChain(httpSecurity: HttpSecurity): SecurityFilterChain {
         httpSecurity
             .csrf { csrf -> csrf.disable() }
             .sessionManagement { session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests { http ->
                 http
-                // Request de Auth
-                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/login").permitAll()
-                    .anyRequest().permitAll()
+                    // Request de Auth
+                    .requestMatchers(HttpMethod.POST, "/api/v1/auth/signin", "/api/v1/auth/signup").permitAll()
+
+                    // Request de Game Data
+                    .requestMatchers(HttpMethod.GET, "/api/v1/creature/**", "/api/v1/spell/**", "/api/v1/unit-stat").hasAnyRole("DEVELOPER", "ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/v1/creature/**", "/api/v1/spell/**", "/api/v1/unit-stat").hasAnyRole("DEVELOPER", "ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/v1/creature/**", "/api/v1/spell/**", "/api/v1/unit-stat").hasAnyRole("DEVELOPER", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/creature/**", "/api/v1/spell/**", "/api/v1/unit-stat").hasAnyRole("DEVELOPER", "ADMIN")
+
+                    // Request de Player Data
+                    .requestMatchers(HttpMethod.GET,
+                        "/api/v1/account/username/**",
+                        "/api/v1/account/email/**",
+                        "/api/v1/character/**").hasAnyRole("USER", "DEVELOPER", "ADMIN")
+                    .requestMatchers(HttpMethod.GET, "/api/v1/account/").hasAnyRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/v1/account/", "/api/v1/character/**").hasAnyRole("DEVELOPER", "ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/v1/account/", "/api/v1/character/**").hasAnyRole("DEVELOPER", "ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/v1/account/", "/api/v1/character/**").hasAnyRole("DEVELOPER", "ADMIN")
+                    .anyRequest().authenticated()
             }
             .httpBasic(Customizer.withDefaults())
 

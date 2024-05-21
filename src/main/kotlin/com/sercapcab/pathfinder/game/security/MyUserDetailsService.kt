@@ -7,13 +7,14 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
 import org.springframework.security.core.userdetails.UserDetails
 import org.springframework.security.core.userdetails.UserDetailsService
+import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.stereotype.Service
 
 @Service
 class MyUserDetailsService(private val accountRepository: AccountRepository): UserDetailsService {
     override fun loadUserByUsername(username: String?): UserDetails {
         val account = accountRepository.findByUsername(username!!)
-            ?: throw AccountNotFoundException("Account with username $username doesn't exists")
+            ?: throw UsernameNotFoundException("Account with username $username doesn't exists")
 
         val authorities: Set<GrantedAuthority> = account.roles.map {
             role -> SimpleGrantedAuthority("ROLE_" + role.roleName.name)
