@@ -28,6 +28,7 @@ class SecurityConfig {
             .authorizeHttpRequests { http ->
                 http
                     // Request de Auth
+                    .requestMatchers(HttpMethod.GET, "/api/v1/auth/ping").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/v1/auth/signin", "/api/v1/auth/signup").permitAll()
 
                     // Request de Game Data

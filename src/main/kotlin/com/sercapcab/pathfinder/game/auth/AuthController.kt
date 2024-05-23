@@ -21,6 +21,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.context.SecurityContextHolder
 import org.springframework.security.core.userdetails.UsernameNotFoundException
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler
+import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
@@ -34,6 +35,12 @@ class AuthController(
     private val accountService: AccountService,
     private val roleService: RoleService
 ) {
+    @GetMapping(path = ["/ping"], produces = [json])
+    @NotNull
+    fun ping(): ResponseEntity<String> {
+        return ResponseEntity.ok("Pong!")
+    }
+
     @PostMapping(path = ["/signin"], produces = [json])
     @NotNull
     fun signIn(@Valid @RequestBody loginDto: LoginDto): ResponseEntity<HttpStatus> {
@@ -43,15 +50,6 @@ class AuthController(
 
         SecurityContextHolder.getContext().authentication = authentication
         return ResponseEntity.ok().build()
-        /*return try {
-
-        } catch (ex: BadCredentialsException) {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        } catch (ex: UsernameNotFoundException) {
-            ResponseEntity.status(HttpStatus.UNAUTHORIZED).build()
-        } catch (ex: Exception) {
-            ResponseEntity.internalServerError().build()
-        }*/
     }
 
     @PostMapping(path = ["/signup"], produces = [json])
