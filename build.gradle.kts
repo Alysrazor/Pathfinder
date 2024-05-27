@@ -35,6 +35,13 @@ dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
 
+	// SSL
+	implementation("org.apache.httpcomponents:httpclient:4.5.13")
+	implementation("org.apache.httpcomponents:httpcore:4.4.13")
+	implementation("org.apache.httpcomponents.client5:httpclient5:5.0.3")
+	implementation("org.apache.httpcomponents.core5:httpcore5:5.0.3")
+	implementation("org.apache.httpcomponents.client5:httpclient5-fluent:5.0.3")
+
 	developmentOnly("org.springframework.boot:spring-boot-devtools")
 
 	implementation("com.mysql:mysql-connector-j")
