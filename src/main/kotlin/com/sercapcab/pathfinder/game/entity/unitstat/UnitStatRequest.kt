@@ -16,7 +16,7 @@ data class UnitStatRequest(
 ) {
     fun toUnitStat(): UnitStat {
         return UnitStat(
-            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.UnitStat".toByteArray()), UUID.randomUUID().toString()),
+            uuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.UnitStat".toByteArray())),
             strength = strength,
             dexterity = dexterity,
             constitution = constitution,

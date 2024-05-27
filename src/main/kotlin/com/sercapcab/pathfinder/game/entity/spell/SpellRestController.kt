@@ -1,4 +1,4 @@
-package com.sercapcab.pathfinder.game.spell
+package com.sercapcab.pathfinder.game.entity.spell
 
 import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import lombok.AllArgsConstructor
@@ -21,7 +21,7 @@ class SpellRestController constructor(
     @Autowired private val spellService: SpellService
 ) {
 
-    @GetMapping(path = [""])
+    @GetMapping(path = ["/"])
     @NotNull
     fun getAllSpells(): ResponseEntity<List<Spell>> {
         val spells: List<Spell> = spellService.findAll()
@@ -40,7 +40,7 @@ class SpellRestController constructor(
         return ResponseEntity.ok(spell)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@RequestBody spell: SpellRequest): ResponseEntity<Spell> {
         val spellCreated: Spell = spellService.save(spell.toSpell())

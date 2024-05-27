@@ -1,20 +1,14 @@
 package com.sercapcab.pathfinder.game.entity.creature
 
 import com.sercapcab.pathfinder.Since
+import com.sercapcab.pathfinder.game.entity.spell.Spell
 import com.sercapcab.pathfinder.game.entity.unitstat.UnitStat
 import com.sercapcab.pathfinder.game.enumeration.UnitClass
-import com.sercapcab.pathfinder.game.spell.Spell
 import jakarta.persistence.*
-import lombok.AllArgsConstructor
-import lombok.Data
-import lombok.NoArgsConstructor
 import java.util.*
 
 @Entity
 @Table(name = "creature_template", catalog = "rpg_duels")
-@AllArgsConstructor
-@NoArgsConstructor
-@Data
 @Since(version = "1.0")
 data class Creature(
     @Id

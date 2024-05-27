@@ -1,4 +1,4 @@
-package com.sercapcab.pathfinder.game.spell
+package com.sercapcab.pathfinder.game.entity.spell
 
 import com.sercapcab.pathfinder.game.enumeration.SpellSchool
 import com.sercapcab.pathfinder.game.enumeration.Stat
@@ -17,7 +17,7 @@ data class SpellRequest(
 ) {
     fun toSpell(): Spell {
         return Spell(
-            spellUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Spell".toByteArray()), UUID.randomUUID().toString()),
+            spellUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Spell".toByteArray())),
             spellName = spellName,
             spellDescription = spellDescription,
             spellSchool = spellSchool,

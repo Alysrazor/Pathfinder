@@ -18,7 +18,7 @@ class UnitStatRestController(
     @Autowired private val unitStatService: UnitStatService
 ){
 
-    @GetMapping(path = [""], produces = [json])
+    @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllUnitStats(): ResponseEntity<List<UnitStat>> {
         val unitStats: List<UnitStat> = unitStatService.findAll().toList()
@@ -37,7 +37,7 @@ class UnitStatRestController(
         return ResponseEntity.ok(unitStat)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@RequestBody unitStat: UnitStatRequest): ResponseEntity<UnitStat> {
         val unitStatCreated = unitStatService.save(unitStat.toUnitStat())

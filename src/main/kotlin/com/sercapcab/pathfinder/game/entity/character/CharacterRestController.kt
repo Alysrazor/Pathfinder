@@ -6,25 +6,16 @@ import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
-import org.springframework.web.bind.annotation.DeleteMapping
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PathVariable
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.PutMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder
-import java.util.UUID
+import java.util.*
 
-@AllArgsConstructor
 @RestController
 @RequestMapping("/api/v1/character")
 @Since(version = "1.0")
 class CharacterRestController constructor(@Autowired private val characterService: CharacterService) {
-    @GetMapping(path = [""], produces = [json])
+    @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllCharacters(): ResponseEntity<List<Character>> {
         val characters: List<Character> = characterService.findAll().toList()
@@ -40,7 +31,7 @@ class CharacterRestController constructor(@Autowired private val characterServic
         return ResponseEntity.ok(character)
     }
 
-    @PostMapping(path = [""], produces = [json])
+    @PostMapping(path = ["/"], produces = [json])
     @NotNull
     fun create(@Valid @RequestBody character: CharacterRequest): ResponseEntity<Character> {
         characterService.save(character.toCharacter())
