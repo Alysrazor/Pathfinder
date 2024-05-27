@@ -1,7 +1,6 @@
 package com.sercapcab.pathfinder.game.security
 
 import com.sercapcab.pathfinder.game.entity.account.AccountRepository
-import com.sercapcab.pathfinder.game.exceptions.account.AccountNotFoundException
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.security.core.userdetails.User
