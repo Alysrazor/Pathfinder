@@ -59,7 +59,7 @@ class AccountController constructor(
         val userRole = roleService.findByRoleName(RoleEnum.USER)!!
         val accountToSave = account.toAccount()
 
-        accountToSave.roles = setOf(userRole)
+        accountToSave.roles.add(userRole)
 
         accountService.save(accountToSave)
 

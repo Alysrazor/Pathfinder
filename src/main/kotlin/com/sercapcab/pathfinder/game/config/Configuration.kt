@@ -1,15 +1,20 @@
 package com.sercapcab.pathfinder.game.config
 
+import com.sercapcab.pathfinder.game.entity.account.Account
 import com.sercapcab.pathfinder.game.entity.account.AccountRequest
 import com.sercapcab.pathfinder.game.entity.account.AccountService
 import com.sercapcab.pathfinder.game.entity.role.Role
 import com.sercapcab.pathfinder.game.entity.role.RoleEnum
 import com.sercapcab.pathfinder.game.entity.role.RoleService
 import com.sercapcab.pathfinder.game.security.MyUserDetailsService
+import com.sercapcab.pathfinder.game.security.generateUUIDv5
 import org.jetbrains.annotations.NotNull
 import org.springframework.boot.CommandLineRunner
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder
+import java.util.*
+
 //import org.springframework.security.core.userdetails.UserDetailsService
 
 @Configuration
@@ -39,24 +44,29 @@ class Configurator {
             //roleService.save(developerRole)
             //roleService.save(userRole)
 
-            val alysrazorAccount = AccountRequest(
+            val alysrazorAccount = Account(
+                accountUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Account".toByteArray())),
                 username = "Alysrazor",
                 email = "alysrazor@rpgduels.es",
-                password = "alysrazor",
+                password = BCryptPasswordEncoder().encode("alysrazor"),
+                roles = mutableSetOf(adminRole, developerRole, userRole)
             )
 
-            val androidAccount = AccountRequest(
+            val androidAccount = Account(
+                accountUuid = generateUUIDv5(UUID.nameUUIDFromBytes("Game.Entity.Account".toByteArray())),
                 username = "Android",
                 email = "android@android.15",
-                password = "android",
+                password = BCryptPasswordEncoder().encode("android"),
+                roles = mutableSetOf(developerRole, userRole)
             )
 
-            //accountService.save(alysrazorAccount.toAccount())
-            //accountService.save(androidAccount.toAccount())
+            //accountService.save(alysrazorAccount)
+            //accountService.save(androidAccount)
 
             //println(generateRandomSecret(32))
             val details = userDetailsService.loadUserByUsername("Alysrazor")
             println(details)
+            println(alysrazorAccount.roles)
         }
     }
 }

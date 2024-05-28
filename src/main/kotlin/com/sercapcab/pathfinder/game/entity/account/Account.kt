@@ -34,7 +34,7 @@ data class Account(
         joinColumns = [JoinColumn(name = "account_uuid")],
         inverseJoinColumns = [JoinColumn(name = "role_id")]
     )
-    var roles: Set<Role> = setOf()
+    var roles: MutableSet<Role> = mutableSetOf()
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

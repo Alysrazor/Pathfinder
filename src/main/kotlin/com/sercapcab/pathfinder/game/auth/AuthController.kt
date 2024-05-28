@@ -60,7 +60,7 @@ class AuthController(
 
         val accountToSave = account.toAccount()
         val userRole = roleService.findByRoleName(RoleEnum.USER)!!
-        accountToSave.roles = setOf(userRole)
+        accountToSave.roles.add(userRole)
 
         accountService.save(accountToSave)
 
