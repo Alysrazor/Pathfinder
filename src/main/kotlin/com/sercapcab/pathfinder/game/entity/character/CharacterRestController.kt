@@ -2,6 +2,8 @@ package com.sercapcab.pathfinder.game.entity.character
 
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.config.json
+import com.sercapcab.pathfinder.game.entity.spell.SpellService
+import com.sercapcab.pathfinder.game.entity.unitstat.UnitStatService
 import jakarta.validation.Valid
 import lombok.AllArgsConstructor
 import org.jetbrains.annotations.NotNull
@@ -14,7 +16,11 @@ import java.util.*
 @RestController
 @RequestMapping("/api/v1/character")
 @Since(version = "1.0")
-class CharacterRestController constructor(@Autowired private val characterService: CharacterService) {
+class CharacterRestController constructor(
+    @Autowired private val characterService: CharacterService,
+    @Autowired private val unitStatService: UnitStatService,
+    @Autowired private val spellService: SpellService
+) {
     @GetMapping(path = ["/"], produces = [json])
     @NotNull
     fun getAllCharacters(): ResponseEntity<List<Character>> {

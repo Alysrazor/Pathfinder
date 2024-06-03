@@ -20,7 +20,7 @@ data class Character(
     var name: String,
 
     @Column(name = "level")
-    var level: UInt,
+    var level: Int,
 
     @Column(name = "unit_armor")
     var unitArmor: Int,

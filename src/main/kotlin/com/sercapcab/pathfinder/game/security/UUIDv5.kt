@@ -13,8 +13,8 @@ import kotlin.experimental.or
  * @return El UUID versión 5 generado.
  */
 fun generateUUIDv5(namespace: UUID): UUID {
-    val message = namespace.toString() + UUID.randomUUID()
-    val bytes = message.toByteArray(StandardCharsets.UTF_8)
+    val uuidString = namespace.toString() + UUID.randomUUID()
+    val bytes = uuidString.toByteArray(StandardCharsets.UTF_8)
 
     val sha1 = MessageDigest.getInstance("SHA-1")
     val hashBytes = sha1.digest(bytes)

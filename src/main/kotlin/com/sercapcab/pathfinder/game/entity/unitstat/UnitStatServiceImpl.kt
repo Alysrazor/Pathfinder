@@ -6,26 +6,30 @@ import org.springframework.stereotype.Service
 import java.util.*
 
 @Service
-class UnitStatServiceImpl @Autowired constructor(private val unitStatDAO: UnitStatDAO): UnitStatService {
+class UnitStatServiceImpl @Autowired constructor(private val unitStatRepository: UnitStatRepository): UnitStatService {
 
     override fun findAll(): List<UnitStat> {
-       return unitStatDAO.findAll().toList()
+       return unitStatRepository.findAll().toList()
     }
 
     override fun findByUUID(unitUUID: UUID): UnitStat {
-        return unitStatDAO.findById(unitUUID)
+        return unitStatRepository.findById(unitUUID)
             .orElseThrow { EntityNotFoundException(UnitStat::class.java, unitUUID) }
     }
 
+    override fun findByComment(comment: String): UnitStat? {
+        return unitStatRepository.findAll().firstOrNull { it.comment.contains(Regex(comment)) }
+    }
+
     override fun save(unitStat: UnitStat): UnitStat {
-        return unitStatDAO.save(unitStat)
+        return unitStatRepository.save(unitStat)
     }
 
     override fun delete(unitStat: UnitStat) {
-        unitStatDAO.delete(unitStat)
+        unitStatRepository.delete(unitStat)
     }
 
     override fun delete(unitUUID: UUID) {
-        unitStatDAO.deleteById(unitUUID)
+        unitStatRepository.deleteById(unitUUID)
     }
 }
