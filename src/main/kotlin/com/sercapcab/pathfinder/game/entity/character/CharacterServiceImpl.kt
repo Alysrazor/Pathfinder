@@ -16,6 +16,10 @@ class CharacterServiceImpl @Autowired constructor(private val characterRepositor
             .orElseThrow { EntityNotFoundException(Character::class.java, characterUUID) }
     }
 
+    override fun findByName(characterName: String): Character? {
+        return characterRepository.findByName(characterName)
+    }
+
     override fun save(character: Character){
         characterRepository.save(character)
     }

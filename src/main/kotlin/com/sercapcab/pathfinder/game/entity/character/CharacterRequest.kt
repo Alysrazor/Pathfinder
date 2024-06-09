@@ -16,7 +16,7 @@ data class CharacterRequest(
     var unitMagicResistance: Int,
     var unitClass: UnitClass,
     var characterStat: UnitStat,
-    val characterSpells: MutableSet<Spell>,
+    var characterSpells: MutableSet<Spell>,
     var unitModel: Int,
     val account: Account
 ) {

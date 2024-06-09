@@ -1,5 +1,6 @@
 package com.sercapcab.pathfinder.game.entity.character
 
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.entity.account.Account
 import com.sercapcab.pathfinder.game.entity.spell.Spell
@@ -16,7 +17,7 @@ data class Character(
     @Column(name = "uuid", nullable = false, updatable = false)
     val uuid: UUID,
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "name", nullable = false)
     var name: String,
 
     @Column(name = "level")

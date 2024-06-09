@@ -27,7 +27,7 @@ data class Account(
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     @JsonIgnore
-    val characters: Set<Character> = setOf(),
+    val characters: Set<Character>? = emptySet(),
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = [CascadeType.ALL])
     @JoinTable(name = "account_access",

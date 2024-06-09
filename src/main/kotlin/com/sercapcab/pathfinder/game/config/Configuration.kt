@@ -1,7 +1,6 @@
 package com.sercapcab.pathfinder.game.config
 
 import com.sercapcab.pathfinder.game.entity.account.Account
-import com.sercapcab.pathfinder.game.entity.account.AccountRequest
 import com.sercapcab.pathfinder.game.entity.account.AccountService
 import com.sercapcab.pathfinder.game.entity.role.Role
 import com.sercapcab.pathfinder.game.entity.role.RoleEnum
@@ -126,7 +125,7 @@ class Configurator {
                 spellDescription = "Ataca al objetivo con tu arma.",
                 spellSchool = SpellSchool.SCHOOL_SLASHING,
                 baseDamage = 8,
-                baseManaCost = 0,
+                basePowerCost = 0,
                 statModifier = Stat.STAT_STRENGTH,
                 statMultiplier = 1.0
             )
@@ -137,7 +136,7 @@ class Configurator {
                     spellDescription = "Lanza una bola de fuego al objetivo.",
                     spellSchool = SpellSchool.SCHOOL_FIRE,
                     baseDamage = 20,
-                    baseManaCost = 30,
+                    basePowerCost = 30,
                     statModifier = Stat.STAT_INTELLIGENCE,
                     statMultiplier = 1.15
                 ),
@@ -146,7 +145,7 @@ class Configurator {
                     spellDescription = "Lanza una lanza de hielo al objetivo.",
                     spellSchool = SpellSchool.SCHOOL_COLD,
                     baseDamage = 12,
-                    baseManaCost = 14,
+                    basePowerCost = 14,
                     statModifier = Stat.STAT_INTELLIGENCE,
                     statMultiplier = 1.08
                 ),
@@ -158,7 +157,7 @@ class Configurator {
                     spellDescription = "Ataca al objetivo con su arma imbuída de energía sagrada",
                     spellSchool = SpellSchool.SCHOOL_RADIANT,
                     baseDamage = 15,
-                    baseManaCost = 15,
+                    basePowerCost = 15,
                     statModifier = Stat.STAT_STRENGTH,
                     statMultiplier = 1.10
                 ),
@@ -167,7 +166,7 @@ class Configurator {
                     spellDescription = "Lanza un mazo de justicia al objetivo.",
                     spellSchool = SpellSchool.SCHOOL_RADIANT,
                     baseDamage = 10,
-                    baseManaCost = 8,
+                    basePowerCost = 8,
                     statModifier = Stat.STAT_CONSTITUTION,
                     statMultiplier = 1.05
                 ),
@@ -179,7 +178,7 @@ class Configurator {
                     spellDescription = "Apuñala al objetivo infligiendo daño físico",
                     spellSchool = SpellSchool.SCHOOL_SLASHING,
                     baseDamage = 15,
-                    baseManaCost = 40,
+                    basePowerCost = 40,
                     statModifier = Stat.STAT_DEXTERITY,
                     statMultiplier = 1.30
                 ),
@@ -188,7 +187,7 @@ class Configurator {
                     spellDescription = "Lanza una daga al objetivo.",
                     spellSchool = SpellSchool.SCHOOL_PIERCING,
                     baseDamage = 5,
-                    baseManaCost = 15,
+                    basePowerCost = 15,
                     statModifier = Stat.STAT_DEXTERITY,
                     statMultiplier = 1.15
                 ),
@@ -200,7 +199,7 @@ class Configurator {
                     spellDescription = "Golpe con su arma de forma contundente al objetivo.",
                     spellSchool = SpellSchool.SCHOOL_BLUDGEONING,
                     baseDamage = 20,
-                    baseManaCost = 35,
+                    basePowerCost = 35,
                     statModifier = Stat.STAT_STRENGTH,
                     statMultiplier = 1.2
                 )

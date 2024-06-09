@@ -2,6 +2,8 @@ package com.sercapcab.pathfinder.game.entity.account
 
 import com.sercapcab.pathfinder.Since
 import com.sercapcab.pathfinder.game.config.json
+import com.sercapcab.pathfinder.game.entity.character.Character
+import com.sercapcab.pathfinder.game.entity.character.CharacterService
 import com.sercapcab.pathfinder.game.entity.role.RoleEnum
 import com.sercapcab.pathfinder.game.entity.role.RoleService
 import com.sercapcab.pathfinder.game.exceptions.account.AccountAlreadyExistsException
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder
 @Since(version = "1.0")
 class AccountController constructor(
     private val accountService: AccountService,
+    private val characterService: CharacterService,
     private val roleService: RoleService
 ) {
     // Getters
@@ -47,6 +50,15 @@ class AccountController constructor(
         val account = accountService.findByEmail(email)
 
         return ResponseEntity.ok(account)
+    }
+
+    @GetMapping(path = ["/characters/{username}"])
+    @NotNull
+    fun getCharactersFromAccount(@PathVariable username: String): ResponseEntity<List<Character>> {
+        val account = accountService.findByUsername(username)
+        val characters: List<Character> = characterService.findAll().filter { it.account.accountUuid == account!!.accountUuid}
+
+        return ResponseEntity.ok(characters)
     }
 
     // POST

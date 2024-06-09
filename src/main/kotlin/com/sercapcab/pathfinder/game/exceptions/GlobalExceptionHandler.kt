@@ -2,6 +2,7 @@ package com.sercapcab.pathfinder.game.exceptions
 
 import com.sercapcab.pathfinder.game.exceptions.account.AccountAlreadyExistsException
 import com.sercapcab.pathfinder.game.exceptions.account.AccountNotFoundException
+import org.springframework.dao.DataIntegrityViolationException
 import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.security.authentication.BadCredentialsException
@@ -30,6 +31,10 @@ class GlobalExceptionHandler {
             is BadCredentialsException -> {
                 response["message"] = "Wrong username or password"
                 status = HttpStatus.UNAUTHORIZED
+            }
+            is DataIntegrityViolationException -> {
+                response["message"] = "Theres already an entity with those unique data."
+                status = HttpStatus.BAD_REQUEST
             }
             is UsernameNotFoundException -> {
                 response["message"] = "Username is not valid."

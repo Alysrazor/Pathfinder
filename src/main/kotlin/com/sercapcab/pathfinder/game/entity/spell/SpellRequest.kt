@@ -10,7 +10,7 @@ data class SpellRequest(
     var spellDescription: String,
     var spellSchool: SpellSchool,
     var baseDamage: Int,
-    var baseManaCost: Int,
+    var basePowerCost: Int,
     var statModifier: Stat,
     var statMultiplier: Double
 ) {
@@ -21,7 +21,7 @@ data class SpellRequest(
             spellDescription = spellDescription,
             spellSchool = spellSchool,
             baseDamage = baseDamage,
-            basePowerCost = baseManaCost,
+            basePowerCost = basePowerCost,
             statModifier = statModifier,
             statMultiplier = statMultiplier
         )

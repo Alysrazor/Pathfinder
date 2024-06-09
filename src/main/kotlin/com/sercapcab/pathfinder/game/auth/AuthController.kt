@@ -85,6 +85,7 @@ class AuthController(
             unitClass = UnitClass.CLASS_WIZARD,
             characterStat = unitStatService.findByComment("Mage")!!,
             characterSpells = mutableSetOf(
+                spellService.findBySpellName("Atacar")!!,
                 spellService.findBySpellName("Bola de Fuego")!!,
                 spellService.findBySpellName("Descarga de Escarcha")!!
             ),
@@ -100,6 +101,7 @@ class AuthController(
             unitClass = UnitClass.CLASS_FIGHTER,
             characterStat = unitStatService.findByComment("Fighter")!!,
             characterSpells = mutableSetOf(
+                spellService.findBySpellName("Atacar")!!,
                 spellService.findBySpellName("Golpe contundente")!!,
             ),
             unitModel = 0,
@@ -114,6 +116,7 @@ class AuthController(
             unitClass = UnitClass.CLASS_PALADIN,
             characterStat = unitStatService.findByComment("Paladin")!!,
             characterSpells = mutableSetOf(
+                spellService.findBySpellName("Atacar")!!,
                 spellService.findBySpellName("Espada Sagrada")!!,
                 spellService.findBySpellName("Sentencia")!!
             ),
@@ -129,6 +132,7 @@ class AuthController(
             unitClass = UnitClass.CLASS_ROGUE,
             characterStat = unitStatService.findByComment("Rogue")!!,
             characterSpells = mutableSetOf(
+                spellService.findBySpellName("Ataque con daga")!!,
                 spellService.findBySpellName("Puñalada")!!,
                 spellService.findBySpellName("Arrojar daga")!!
             ),
